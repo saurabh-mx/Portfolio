@@ -26,12 +26,13 @@ export default function Contact() {
     return `mailto:${portfolioData.personal.email}?subject=${sub}&body=${body}`;
   };
 
+  const phoneDigits = portfolioData.personal.phone.replace(/[^0-9]/g, "");
+
   const buildWhatsAppUrl = () => {
     const text = encodeURIComponent(
       `Hi Saurabh,\nMy name is ${formData.name || "a visitor"}.\n\nMessage:\n${formData.message || "I saw your portfolio and would like to connect."}\n\nEmail: ${formData.email || "N/A"}`
     );
-    // WhatsApp phone number without spaces or plus
-    return `https://wa.me/915539067785?text=${text}`;
+    return `https://wa.me/${phoneDigits}?text=${text}`;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -51,7 +52,7 @@ export default function Contact() {
 
   const handleWhatsAppSubmit = () => {
     if (!formData.name && !formData.message) {
-      window.open("https://wa.me/915539067785", "_blank");
+      window.open(`https://wa.me/${phoneDigits}`, "_blank");
       return;
     }
     const waUrl = buildWhatsAppUrl();
@@ -115,7 +116,7 @@ export default function Contact() {
               </a>
 
               <a
-                href="https://wa.me/915539067785"
+                href={`https://wa.me/${phoneDigits}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 p-3.5 rounded-2xl glass-panel-subtle hover:bg-white/10 border border-white/5 transition-colors group cursor-pointer"
@@ -126,7 +127,7 @@ export default function Contact() {
                 <div>
                   <p className="text-xs text-zinc-400">WhatsApp</p>
                   <p className="text-sm font-medium text-white group-hover:text-green-300">
-                    +91 5539067785 (Chat Directly)
+                    {portfolioData.personal.phone} (Chat Directly)
                   </p>
                 </div>
               </a>
