@@ -228,22 +228,27 @@ export default function Hero({ onOpenResume }: HeroProps) {
   const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), springConfig);
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), springConfig);
   const [isCardHovered, setIsCardHovered] = useState(false);
+  const cardRectRef = useRef<DOMRect | null>(null);
+
+  const handleMouseEnter = () => {
+    setIsCardHovered(true);
+    if (cardRef.current) {
+      cardRectRef.current = cardRef.current.getBoundingClientRect();
+    }
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
+    const rect = cardRectRef.current;
+    if (!rect) return;
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     mouseX.set(x);
     mouseY.set(y);
   };
 
-  const handleMouseEnter = () => {
-    setIsCardHovered(true);
-  };
-
   const handleMouseLeave = () => {
     setIsCardHovered(false);
+    cardRectRef.current = null;
     mouseX.set(0);
     mouseY.set(0);
   };
@@ -453,7 +458,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
                   boxShadow: `0 0 18px ${badge.glowColor}`,
                 },
                 whileTap: { scale: 0.95 },
-                className: `flex items-center gap-1.5 ${badge.label ? "px-3" : "px-2.5"} py-1.5 rounded-xl glass-pill transition-colors cursor-pointer select-none hover:text-white ${badge.hoverBorder} ${badge.hoverBg}`,
+                className: `flex items-center gap-1.5 ${badge.label ? "px-3" : "px-2.5"} py-1.5 rounded-xl glass-pill transition-colors cursor-pointer select-none hover:text-white will-change-transform ${badge.hoverBorder} ${badge.hoverBg}`,
               };
 
               if (badge.isLink) {
@@ -489,14 +494,11 @@ export default function Hero({ onOpenResume }: HeroProps) {
           className="relative flex-shrink-0"
           style={{ perspective: 1000 }}
         >
-          {/* Pulsing Ambient Backdrop Aura */}
-          <motion.div
-            animate={{
-              scale: isCardHovered ? [1.02, 1.08, 1.02] : [1, 1.04, 1],
-              opacity: isCardHovered ? 0.85 : 0.6,
-            }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -inset-3 rounded-[36px] bg-gradient-to-tr from-indigo-500/30 via-purple-500/25 to-cyan-400/30 blur-2xl -z-10"
+          {/* Ambient Backdrop Aura */}
+          <div
+            className={`absolute -inset-3 rounded-[36px] bg-gradient-to-tr from-indigo-500/30 via-purple-500/25 to-cyan-400/30 blur-2xl -z-10 transition-all duration-500 transform-gpu ${
+              isCardHovered ? "scale-105 opacity-85" : "scale-100 opacity-60"
+            }`}
           />
 
           {/* 3D Tilt Card */}
@@ -585,7 +587,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
               boxShadow: "0 14px 30px -10px rgba(99, 102, 241, 0.35)",
               borderColor: "rgba(129, 140, 248, 0.4)",
             }}
-            className="glass-panel rounded-2xl p-5 text-center border border-white/10 hover:border-indigo-500/50 hover:bg-slate-900/80 transition-all group relative overflow-hidden cursor-pointer select-none"
+            className="glass-panel rounded-2xl p-5 text-center border border-white/10 hover:border-indigo-500/50 hover:bg-slate-900/80 transition-all group relative overflow-hidden cursor-pointer select-none will-change-transform"
           >
             {/* Top Laser Accent Sweep */}
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

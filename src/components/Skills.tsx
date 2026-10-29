@@ -298,7 +298,7 @@ export default function Skills() {
                 repeat: Infinity,
                 ease: "linear",
               }}
-              className="flex items-center gap-3 w-max"
+              className="flex items-center gap-3 w-max will-change-transform transform-gpu"
             >
               {row1Skills.map((skill, index) => {
                 const Icon = skill.icon;
@@ -344,7 +344,7 @@ export default function Skills() {
                 repeat: Infinity,
                 ease: "linear",
               }}
-              className="flex items-center gap-3 w-max"
+              className="flex items-center gap-3 w-max will-change-transform transform-gpu"
             >
               {row2Skills.map((skill, index) => {
                 const Icon = skill.icon;

@@ -24,7 +24,6 @@ import { portfolioData } from "@/data/portfolio-data";
 export default function About() {
   const [activePillarIndex, setActivePillarIndex] = useState<number>(0);
   const [hoveredPillarIndex, setHoveredPillarIndex] = useState<number | null>(null);
-  const [hoveredMetricIndex, setHoveredMetricIndex] = useState<number | null>(null);
 
   const competencyMetrics = [
     {
@@ -111,17 +110,13 @@ export default function About() {
 
   return (
     <section id="about" className="scroll-mt-28 py-20 px-4 sm:px-6 max-w-6xl mx-auto relative">
-      {/* Subtle Ambient Orbital Grid */}
+      {/* Subtle Ambient Orbital Grid (CSS GPU Accelerated) */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none -z-10 opacity-15">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-          className="w-full h-full rounded-full border border-dashed border-indigo-500/30 flex items-center justify-center"
-        >
+        <div className="w-full h-full rounded-full border border-dashed border-indigo-500/30 flex items-center justify-center animate-[spin_60s_linear_infinite] will-change-transform">
           <div className="w-[420px] h-[420px] rounded-full border border-cyan-500/20 flex items-center justify-center">
             <div className="w-[240px] h-[240px] rounded-full border border-purple-500/30" />
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Section Header */}
@@ -173,26 +168,12 @@ export default function About() {
           return (
             <motion.div
               key={i}
-              onMouseEnter={() => setHoveredMetricIndex(i)}
-              onMouseLeave={() => setHoveredMetricIndex(null)}
               whileHover={{ y: -5, scale: 1.02 }}
               style={{
                 boxShadow: `0 0 20px ${node.glow}`,
               }}
-              className="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 hover:border-white/25 transition-all group relative overflow-hidden select-none"
+              className="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 hover:border-white/25 transition-all group relative overflow-hidden select-none will-change-transform"
             >
-              {/* Glowing Stick Border Beam on Hover */}
-              {hoveredMetricIndex === i && (
-                <BorderBeam
-                  size={100}
-                  duration={3}
-                  colorFrom={node.accent}
-                  colorTo="#FFFFFF"
-                  borderWidth={1.5}
-                  borderRadius={16}
-                />
-              )}
-
               <div
                 className="absolute top-0 left-0 right-0 h-[2px] transition-opacity duration-300"
                 style={{ backgroundColor: node.accent }}

@@ -13,7 +13,7 @@ interface BorderBeamProps {
 }
 
 export function BorderBeam({
-  size = 120,
+  size = 130,
   duration = 4,
   colorFrom = "#38BDF8",
   colorTo = "#FFFFFF",
@@ -30,6 +30,8 @@ export function BorderBeam({
         WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
         maskComposite: "exclude",
         WebkitMaskComposite: "xor",
+        willChange: "transform",
+        transform: "translateZ(0)",
       }}
     >
       <motion.div
@@ -39,7 +41,9 @@ export function BorderBeam({
             width: size,
             offsetPath: `rect(0 auto auto 0 round ${borderRadius}px)`,
             background: `linear-gradient(to left, ${colorTo}, ${colorFrom}, transparent)`,
-            filter: `drop-shadow(0 0 8px ${colorFrom}) drop-shadow(0 0 14px ${colorFrom})`,
+            boxShadow: `0 0 12px 2px ${colorFrom}`,
+            willChange: "offset-distance, transform",
+            transform: "translateZ(0)",
           } as React.CSSProperties
         }
         initial={{ offsetDistance: "0%" }}
