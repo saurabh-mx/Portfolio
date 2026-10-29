@@ -89,7 +89,7 @@ export default function Contact() {
           <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-6">
             <h3 className="text-xl font-bold text-white">Contact Information</h3>
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-              Available via direct email, WhatsApp, phone, or GitHub.
+              Available via direct email, phone, or social channels.
             </p>
 
             <div className="space-y-4">
@@ -119,23 +119,6 @@ export default function Contact() {
                   <p className="text-xs text-zinc-400">Phone</p>
                   <p className="text-sm font-medium text-white group-hover:text-emerald-300">
                     {portfolioData.personal.phone}
-                  </p>
-                </div>
-              </a>
-
-              <a
-                href={`https://wa.me/${phoneDigits}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-3.5 rounded-2xl glass-panel-subtle hover:bg-white/10 border border-white/5 transition-colors group cursor-pointer"
-              >
-                <div className="p-2.5 rounded-xl bg-green-500/10 text-green-400 group-hover:scale-110 transition-transform">
-                  <WhatsAppIcon className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-xs text-zinc-400">WhatsApp</p>
-                  <p className="text-sm font-medium text-white group-hover:text-green-300">
-                    {portfolioData.personal.phone} (Chat Directly)
                   </p>
                 </div>
               </a>
