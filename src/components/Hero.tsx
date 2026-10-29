@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import {
   motion,
-  AnimatePresence,
   useMotionValue,
   useSpring,
   useTransform,
@@ -56,14 +55,39 @@ const coreTechnologies = [
 
 export default function Hero({ onOpenResume }: HeroProps) {
   const [roleIndex, setRoleIndex] = useState(0);
+  const [currentText, setCurrentText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Cycling dynamic headline words
+  // Character-by-character typewriter animation
   useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % dynamicRoles.length);
-    }, 3200);
-    return () => clearInterval(interval);
-  }, []);
+    const currentRole = dynamicRoles[roleIndex];
+    let timer: NodeJS.Timeout;
+
+    if (!isDeleting && currentText.length < currentRole.length) {
+      // Typing forward with natural cadence
+      timer = setTimeout(() => {
+        setCurrentText(currentRole.slice(0, currentText.length + 1));
+      }, 55);
+    } else if (!isDeleting && currentText.length === currentRole.length) {
+      // Pause at complete word for 2.2 seconds so user can read it
+      timer = setTimeout(() => {
+        setIsDeleting(true);
+      }, 2200);
+    } else if (isDeleting && currentText.length > 0) {
+      // Deleting briskly
+      timer = setTimeout(() => {
+        setCurrentText(currentRole.slice(0, currentText.length - 1));
+      }, 28);
+    } else if (isDeleting && currentText.length === 0) {
+      // Pause slightly, then advance to next phrase
+      timer = setTimeout(() => {
+        setIsDeleting(false);
+        setRoleIndex((prev) => (prev + 1) % dynamicRoles.length);
+      }, 300);
+    }
+
+    return () => clearTimeout(timer);
+  }, [currentText, isDeleting, roleIndex]);
 
   // 3D Interactive Card Tilt
   const cardRef = useRef<HTMLDivElement>(null);
@@ -149,23 +173,14 @@ export default function Hero({ onOpenResume }: HeroProps) {
               </motion.span>
             ))}
             <br className="hidden sm:inline" />
-            <span className="relative inline-flex items-center flex-wrap mt-1">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={roleIndex}
-                  initial={{ opacity: 0, y: 16, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -16, filter: "blur(8px)" }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-400 bg-clip-text text-transparent font-extrabold"
-                >
-                  {dynamicRoles[roleIndex]}
-                </motion.span>
-              </AnimatePresence>
+            <span className="inline">
+              <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-400 bg-clip-text text-transparent font-extrabold">
+                {currentText || "\u00A0"}
+              </span>
               <motion.span
                 animate={{ opacity: [1, 0, 1] }}
                 transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                className="inline-block w-[3px] h-[0.85em] ml-2 align-middle bg-cyan-400 rounded-sm shadow-[0_0_10px_#22d3ee]"
+                className="inline-block w-[3.5px] h-[0.85em] ml-1.5 align-baseline bg-cyan-400 rounded-sm shadow-[0_0_12px_#22d3ee]"
               />
             </span>
           </motion.h1>
