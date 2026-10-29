@@ -16,31 +16,34 @@ export default function Home() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-between">
-      {/* Dynamic Animated Ambient Background Blobs */}
-      <BackgroundBlobs />
+    <>
+      {/* Portfolio Website View - Completely excluded from DOM flow when printing CV */}
+      <div className={`portfolio-main-page relative min-h-screen flex flex-col justify-between ${isResumeOpen ? "print:hidden" : ""}`}>
+        {/* Dynamic Animated Ambient Background Blobs */}
+        <BackgroundBlobs />
 
-      {/* Floating Glassmorphic Navigation */}
-      <Navbar onOpenResume={() => setIsResumeOpen(true)} />
+        {/* Floating Glassmorphic Navigation */}
+        <Navbar onOpenResume={() => setIsResumeOpen(true)} />
 
-      {/* Main Content Sections */}
-      <main className="flex-1">
-        <Hero onOpenResume={() => setIsResumeOpen(true)} />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Contact />
-      </main>
+        {/* Main Content Sections */}
+        <main className="flex-1">
+          <Hero onOpenResume={() => setIsResumeOpen(true)} />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Contact />
+        </main>
 
-      {/* Footer */}
-      <Footer />
+        {/* Footer */}
+        <Footer />
+      </div>
 
-      {/* Resume Modal View */}
+      {/* Resume Modal View - The sole printable element when opened */}
       <ResumeModal
         isOpen={isResumeOpen}
         onClose={() => setIsResumeOpen(false)}
       />
-    </div>
+    </>
   );
 }
