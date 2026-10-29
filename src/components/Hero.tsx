@@ -97,7 +97,8 @@ const socialBadges = [
     id: "github",
     href: portfolioData.personal.github,
     icon: GithubIcon,
-    label: portfolioData.personal.githubDisplay,
+    label: "",
+    title: "GitHub Profile",
     hoverBorder: "hover:border-white/50",
     hoverBg: "hover:bg-white/10",
     iconColor: "text-white",
@@ -423,13 +424,15 @@ export default function Hero({ onOpenResume }: HeroProps) {
               const BadgeIcon = badge.icon;
               const content = (
                 <>
-                  <BadgeIcon className={`w-3.5 h-3.5 ${badge.iconColor}`} />
-                  <span>{badge.label}</span>
+                  <BadgeIcon className={`${badge.label ? "w-3.5 h-3.5" : "w-4 h-4"} ${badge.iconColor}`} />
+                  {badge.label ? <span>{badge.label}</span> : null}
                 </>
               );
 
               const motionProps = {
                 key: badge.id,
+                title: badge.title || badge.label,
+                "aria-label": badge.title || badge.label,
                 initial: { opacity: 0, y: 10 },
                 animate: {
                   opacity: 1,
@@ -450,7 +453,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
                   boxShadow: `0 0 18px ${badge.glowColor}`,
                 },
                 whileTap: { scale: 0.95 },
-                className: `flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill transition-colors cursor-pointer select-none hover:text-white ${badge.hoverBorder} ${badge.hoverBg}`,
+                className: `flex items-center gap-1.5 ${badge.label ? "px-3" : "px-2.5"} py-1.5 rounded-xl glass-pill transition-colors cursor-pointer select-none hover:text-white ${badge.hoverBorder} ${badge.hoverBg}`,
               };
 
               if (badge.isLink) {
