@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ArrowRight, Mail, Sparkles, Download, Phone, MapPin, Code2 } from "lucide-react";
+import { ArrowRight, Mail, Sparkles, Download, MapPin, Code2 } from "lucide-react";
 import {
   GithubIcon,
   YoutubeIcon,
@@ -164,13 +164,6 @@ export default function Hero({ onOpenResume }: HeroProps) {
             >
               <Mail className="w-3.5 h-3.5 text-indigo-400" />
               <span>{portfolioData.personal.email}</span>
-            </a>
-            <a
-              href={`tel:${portfolioData.personal.phone}`}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-indigo-400/40 transition-all hover:scale-105"
-            >
-              <Phone className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{portfolioData.personal.phone}</span>
             </a>
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill text-zinc-400">
               <MapPin className="w-3.5 h-3.5 text-indigo-400" />

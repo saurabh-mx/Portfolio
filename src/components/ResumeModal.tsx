@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { X, Download, ExternalLink, Briefcase, GraduationCap, Award, Mail, Phone, MapPin } from "lucide-react";
+import { X, Download, ExternalLink, Briefcase, GraduationCap, Award, Mail, MapPin } from "lucide-react";
 import {
   GithubIcon,
   YoutubeIcon,
@@ -94,11 +94,6 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   <Mail className="w-3.5 h-3.5 text-indigo-400" />
                   {portfolioData.personal.email}
                 </a>
-                <span className="text-zinc-600 hidden sm:inline">•</span>
-                <span className="flex items-center gap-1.5">
-                  <Phone className="w-3.5 h-3.5 text-indigo-400" />
-                  {portfolioData.personal.phone}
-                </span>
                 <span className="text-zinc-600 hidden sm:inline">•</span>
                 <span className="flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-indigo-400" />

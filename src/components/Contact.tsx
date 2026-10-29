@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Send, CheckCircle2, MessageSquare, Phone, ArrowUpRight, ExternalLink } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle2, MessageSquare, ArrowUpRight, ExternalLink } from "lucide-react";
 import {
   GithubIcon,
   YoutubeIcon,
   KickIcon,
-  WhatsAppIcon,
   DiscordIcon,
   InstagramIcon,
   SteamIcon,
@@ -34,15 +33,6 @@ export default function Contact() {
     return `mailto:${portfolioData.personal.email}?subject=${sub}&body=${body}`;
   };
 
-  const phoneDigits = portfolioData.personal.phone.replace(/[^0-9]/g, "");
-
-  const buildWhatsAppUrl = () => {
-    const text = encodeURIComponent(
-      `Hi Saurabh,\nMy name is ${formData.name || "a visitor"}.\n\nMessage:\n${formData.message || "I saw your portfolio and would like to connect."}\n\nEmail: ${formData.email || "N/A"}`
-    );
-    return `https://wa.me/${phoneDigits}?text=${text}`;
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
@@ -56,15 +46,6 @@ export default function Contact() {
       window.location.href = mailto;
       setStatus("success");
     }, 600);
-  };
-
-  const handleWhatsAppSubmit = () => {
-    if (!formData.name && !formData.message) {
-      window.open(`https://wa.me/${phoneDigits}`, "_blank");
-      return;
-    }
-    const waUrl = buildWhatsAppUrl();
-    window.open(waUrl, "_blank");
   };
 
   return (
@@ -89,7 +70,7 @@ export default function Contact() {
           <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-6">
             <h3 className="text-xl font-bold text-white">Contact Information</h3>
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-              Available via direct email, phone, or social channels.
+              Available via direct email or social channels.
             </p>
 
             <div className="space-y-4">
@@ -104,21 +85,6 @@ export default function Contact() {
                   <p className="text-xs text-zinc-400">Direct Email</p>
                   <p className="text-sm font-medium text-white truncate group-hover:text-indigo-300">
                     {portfolioData.personal.email}
-                  </p>
-                </div>
-              </a>
-
-              <a
-                href={`tel:${portfolioData.personal.phone}`}
-                className="flex items-center gap-4 p-3.5 rounded-2xl glass-panel-subtle hover:bg-white/10 border border-white/5 transition-colors group cursor-pointer"
-              >
-                <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition-transform">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-xs text-zinc-400">Phone</p>
-                  <p className="text-sm font-medium text-white group-hover:text-emerald-300">
-                    {portfolioData.personal.phone}
                   </p>
                 </div>
               </a>
@@ -210,7 +176,7 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Contact Form with Direct Mailto & WhatsApp Fallbacks */}
+        {/* Contact Form with Direct Mailto Fallback */}
         <div className="lg:col-span-7">
           <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10">
             {status === "success" ? (
@@ -238,14 +204,6 @@ export default function Contact() {
                       <span>Re-open Email App</span>
                     </a>
                   )}
-
-                  <button
-                    onClick={handleWhatsAppSubmit}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-600/20 hover:bg-green-600 border border-green-500/40 text-green-300 hover:text-white text-xs font-medium transition-colors cursor-pointer"
-                  >
-                    <WhatsAppIcon className="w-3.5 h-3.5 text-green-400" />
-                    <span>Send via WhatsApp</span>
-                  </button>
 
                   <button
                     onClick={() => setStatus("idle")}
@@ -335,15 +293,6 @@ export default function Contact() {
                         <Send className="w-4 h-4" />
                       </>
                     )}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleWhatsAppSubmit}
-                    className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-green-400 font-medium text-sm transition-all cursor-pointer"
-                  >
-                    <WhatsAppIcon className="w-4 h-4" />
-                    <span>WhatsApp</span>
                   </button>
                 </div>
 
