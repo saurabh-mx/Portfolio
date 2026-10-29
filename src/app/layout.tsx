@@ -30,6 +30,15 @@ export const metadata: Metadata = {
     "Rungta College",
   ],
   authors: [{ name: "Saurabh Bhai Patel" }],
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "Saurabh Bhai Patel | Web Developer & CSE Student",
     description:
