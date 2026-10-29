@@ -34,6 +34,7 @@ export const portfolioData = {
     initials: "SP",
     name: "Saurabh Bhai Patel",
     avatar: "/images/saurabh-patel.jpg",
+    avatarFace: "/images/saurabh-patel-face.jpg",
     title: "Experienced Full-Stack Web Developer",
     tagline: "Full-Stack Web Developer • React, Next.js & Node.js Specialist",
     status: "Available for High-Impact Web & Full-Stack Projects",

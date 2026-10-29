@@ -95,10 +95,11 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left print:flex-row print:gap-4 print:text-left print:items-center">
               <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-indigo-400/40 bg-slate-900 flex-shrink-0 shadow-lg print:w-16 print:h-16 print:rounded-xl print:border-slate-300">
                 <Image
-                  src={portfolioData.personal.avatar}
+                  src={portfolioData.personal.avatarFace}
                   alt={portfolioData.personal.name}
                   fill
-                  className="object-cover object-top"
+                  priority
+                  className="object-cover object-center"
                 />
               </div>
               <div className="flex-1">
