@@ -88,6 +88,9 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-wider uppercase">
                   {portfolioData.personal.name}
                 </h1>
+                <p className="text-xs sm:text-sm font-semibold text-indigo-400 mt-1">
+                  {portfolioData.personal.title}
+                </p>
               
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-2 gap-x-5 text-xs text-zinc-300 mt-3 font-normal">
                 <a href={`mailto:${portfolioData.personal.email}`} className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors">

@@ -72,7 +72,7 @@ export default function Navbar({ onOpenResume }: NavbarProps) {
             </span>
             <span className="text-[10px] text-zinc-400 flex items-center gap-1 font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Graduating 2027
+              Full-Stack Developer
             </span>
           </div>
         </a>

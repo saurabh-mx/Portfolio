@@ -40,7 +40,7 @@ export default function About() {
           Summary & Background
         </h2>
         <p className="mt-3 text-sm sm:text-base text-zinc-400 max-w-2xl">
-          Computer Science & Engineering student focused on building responsive, high-performance web applications.
+          Full-Stack Web Developer specialized in building robust, production-grade applications with modern React, Next.js, and Node architectures.
         </p>
       </div>
 
