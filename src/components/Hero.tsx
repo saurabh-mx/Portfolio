@@ -405,7 +405,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
               className="flex items-center gap-2 px-5 py-3.5 rounded-xl glass-panel-interactive text-zinc-200 font-medium text-sm cursor-pointer border border-white/10 transition-all group"
             >
               <Download className="w-4 h-4 text-indigo-400 group-hover:translate-y-0.5 transition-transform" />
-              <span>Curriculum Vitae</span>
+              <span>CV</span>
             </motion.button>
 
             <motion.a
