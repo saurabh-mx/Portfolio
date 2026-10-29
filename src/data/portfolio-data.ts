@@ -143,7 +143,7 @@ export const portfolioData = {
       id: "proj-exp-1",
       role: "Full-Stack Project Developer",
       organization: "Independent Projects",
-      period: "2024 – Present",
+      period: "2026 – Present",
       location: "Patna, India",
       type: "Hands-on Development",
       description: [
