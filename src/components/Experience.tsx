@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import {
   GraduationCap,
   Calendar,
@@ -108,17 +107,12 @@ export default function Experience() {
                   ))}
                 </ul>
 
-                {/* Certificate Preview Card / Trigger */}
+                {/* Certificate Action Card */}
                 {exp.certificateUrl && (
                   <div className="mt-5 p-3.5 rounded-xl bg-white/[0.02] border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="relative w-12 h-14 rounded-lg overflow-hidden border border-white/20 bg-slate-900 flex-shrink-0">
-                        <Image
-                          src={exp.certificateUrl}
-                          alt="Certificate Thumbnail"
-                          fill
-                          className="object-cover"
-                        />
+                      <div className="p-2.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex-shrink-0">
+                        <FileBadge className="w-4 h-4" />
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
