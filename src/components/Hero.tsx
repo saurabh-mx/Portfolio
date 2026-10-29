@@ -29,6 +29,14 @@ import {
   InstagramIcon,
   SteamIcon,
 } from "@/components/SocialIcons";
+import {
+  ReactIcon,
+  NextjsIcon,
+  TypescriptIcon,
+  TailwindIcon,
+  NodeIcon,
+  SupabaseIcon,
+} from "@/components/TechIcons";
 import { portfolioData } from "@/data/portfolio-data";
 
 interface HeroProps {
@@ -45,12 +53,42 @@ const dynamicRoles = [
 ];
 
 const coreTechnologies = [
-  { name: "React", icon: Code2, hoverClass: "hover:border-cyan-400/60 hover:bg-cyan-500/10 hover:text-cyan-300" },
-  { name: "Next.js 16", icon: Layers, hoverClass: "hover:border-white/60 hover:bg-white/10 hover:text-white" },
-  { name: "TypeScript", icon: Terminal, hoverClass: "hover:border-blue-400/60 hover:bg-blue-500/10 hover:text-blue-300" },
-  { name: "Tailwind CSS", icon: Sparkles, hoverClass: "hover:border-teal-400/60 hover:bg-teal-500/10 hover:text-teal-300" },
-  { name: "Node.js", icon: Database, hoverClass: "hover:border-green-400/60 hover:bg-green-500/10 hover:text-green-300" },
-  { name: "Supabase", icon: Flame, hoverClass: "hover:border-emerald-400/60 hover:bg-emerald-500/10 hover:text-emerald-300" },
+  {
+    name: "React",
+    icon: ReactIcon,
+    glow: "rgba(97, 218, 251, 0.4)",
+    hoverClass: "hover:border-cyan-400 hover:text-cyan-300",
+  },
+  {
+    name: "Next.js 16",
+    icon: NextjsIcon,
+    glow: "rgba(255, 255, 255, 0.35)",
+    hoverClass: "hover:border-white hover:text-white",
+  },
+  {
+    name: "TypeScript",
+    icon: TypescriptIcon,
+    glow: "rgba(49, 120, 198, 0.4)",
+    hoverClass: "hover:border-blue-400 hover:text-blue-300",
+  },
+  {
+    name: "Tailwind CSS",
+    icon: TailwindIcon,
+    glow: "rgba(56, 189, 248, 0.4)",
+    hoverClass: "hover:border-sky-400 hover:text-sky-300",
+  },
+  {
+    name: "Node.js",
+    icon: NodeIcon,
+    glow: "rgba(95, 160, 78, 0.4)",
+    hoverClass: "hover:border-green-400 hover:text-green-300",
+  },
+  {
+    name: "Supabase",
+    icon: SupabaseIcon,
+    glow: "rgba(62, 207, 142, 0.4)",
+    hoverClass: "hover:border-emerald-400 hover:text-emerald-300",
+  },
 ];
 
 export default function Hero({ onOpenResume }: HeroProps) {
@@ -187,63 +225,87 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
           {/* Senior Narrative Bio */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-6 text-sm sm:text-base lg:text-lg text-zinc-300 max-w-xl font-normal leading-relaxed"
           >
             Hi, I&apos;m <strong className="text-white font-semibold">{portfolioData.personal.name}</strong> — an{" "}
-            <span className="text-indigo-300 font-medium">Experienced Full-Stack Web Developer</span>. I architect and build
-            scalable web platforms, real-time streaming tools, and production-ready applications with modern cloud backends,
-            intuitive UI animations, and clean, modular code.
+            <span className="bg-gradient-to-r from-indigo-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent font-semibold">
+              Experienced Full-Stack Web Developer
+            </span>. I architect and build scalable web platforms, real-time streaming tools, and production-ready applications with modern cloud backends, intuitive UI animations, and clean, modular code.
           </motion.p>
 
-          {/* Interactive Core Tech Pills */}
+          {/* Animated Core Tech Pills with Brand SVGs & Gentle Float Wave */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.32 }}
-            className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs"
+            transition={{ duration: 0.5, delay: 0.28 }}
+            className="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs"
           >
-            <span className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mr-1">Stack:</span>
-            {coreTechnologies.map((tech) => {
+            <span className="text-[11px] font-mono font-bold text-zinc-400 uppercase tracking-widest mr-1">
+              STACK:
+            </span>
+            {coreTechnologies.map((tech, i) => {
               const Icon = tech.icon;
               return (
                 <motion.div
                   key={tech.name}
-                  whileHover={{ scale: 1.08, y: -2 }}
+                  animate={{ y: [0, -3.5, 0] }}
+                  transition={{
+                    duration: 3 + i * 0.35,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.2,
+                  }}
+                  whileHover={{
+                    scale: 1.15,
+                    y: -5,
+                    boxShadow: `0 0 18px ${tech.glow}`,
+                  }}
                   whileTap={{ scale: 0.95 }}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg glass-pill text-zinc-300 border border-white/5 transition-all cursor-pointer ${tech.hoverClass}`}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill text-zinc-200 border border-white/10 transition-all cursor-pointer select-none bg-slate-900/60 ${tech.hoverClass}`}
                 >
-                  <Icon className="w-3.5 h-3.5" />
-                  <span className="font-medium text-[11px]">{tech.name}</span>
+                  <Icon className="w-4 h-4 flex-shrink-0" size={16} />
+                  <span className="font-semibold text-xs tracking-tight">{tech.name}</span>
                 </motion.div>
               );
             })}
           </motion.div>
 
-          {/* Action CTA Buttons */}
+          {/* Action CTA Buttons with Interactive Shimmer & Magnetic Motion */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.38 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
             className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3.5"
           >
             <motion.a
               href="#projects"
-              whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(99, 102, 241, 0.45)" }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 35px rgba(99, 102, 241, 0.55)" }}
               whileTap={{ scale: 0.96 }}
-              className="group relative overflow-hidden flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-purple-600 text-white font-medium text-sm shadow-xl shadow-indigo-500/25 transition-all cursor-pointer"
+              className="group relative overflow-hidden flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-purple-600 text-white font-medium text-sm shadow-xl shadow-indigo-500/25 transition-all cursor-pointer"
             >
-              <span>Explore Projects</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              {/* Infinite Laser Shimmer Sweep */}
+              <motion.div
+                animate={{ x: ["-100%", "250%"] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
+                className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none"
+              />
+              <span className="font-semibold">Explore Projects</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
             </motion.a>
 
             <motion.button
               onClick={onOpenResume}
-              whileHover={{ scale: 1.04, borderColor: "rgba(167, 139, 250, 0.5)" }}
+              whileHover={{
+                scale: 1.05,
+                borderColor: "rgba(167, 139, 250, 0.6)",
+                backgroundColor: "rgba(255, 255, 255, 0.08)",
+                boxShadow: "0 0 20px rgba(167, 139, 250, 0.25)",
+              }}
               whileTap={{ scale: 0.96 }}
-              className="flex items-center gap-2 px-5 py-3.5 rounded-xl glass-panel-interactive text-zinc-200 font-medium text-sm cursor-pointer border border-white/10 hover:bg-white/10 transition-all"
+              className="flex items-center gap-2 px-5 py-3.5 rounded-xl glass-panel-interactive text-zinc-200 font-medium text-sm cursor-pointer border border-white/10 transition-all group"
             >
               <Download className="w-4 h-4 text-indigo-400 group-hover:translate-y-0.5 transition-transform" />
               <span>Curriculum Vitae</span>
@@ -251,31 +313,33 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
             <motion.a
               href="#contact"
-              whileHover={{ scale: 1.04 }}
+              whileHover={{
+                scale: 1.05,
+                borderColor: "rgba(255, 255, 255, 0.2)",
+                boxShadow: "0 0 20px rgba(255, 255, 255, 0.15)",
+              }}
               whileTap={{ scale: 0.96 }}
-              className="flex items-center gap-2 px-5 py-3.5 rounded-xl glass-panel-subtle text-zinc-300 hover:text-white font-medium text-sm hover:bg-white/10 transition-all border border-white/5"
+              className="flex items-center gap-2 px-5 py-3.5 rounded-xl glass-panel-subtle text-zinc-300 hover:text-white font-medium text-sm hover:bg-white/10 transition-all border border-white/5 group"
             >
-              <Mail className="w-4 h-4 text-zinc-400" />
+              <Mail className="w-4 h-4 text-zinc-400 group-hover:scale-110 transition-transform" />
               <span>Get in Touch</span>
             </motion.a>
           </motion.div>
 
-          {/* Direct Social & Contact Chips with Spring Hover */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs text-zinc-300"
-          >
+          {/* Direct Social & Contact Chips with Individual Stagger & Platform-Specific Glow */}
+          <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs text-zinc-300">
             <motion.a
               href={portfolioData.personal.github}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.08, y: -2 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(255, 255, 255, 0.3)" }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-indigo-400/40 hover:bg-indigo-500/10 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-white/50 transition-all cursor-pointer"
             >
-              <GithubIcon className="w-3.5 h-3.5 text-indigo-400" />
+              <GithubIcon className="w-3.5 h-3.5 text-white" />
               <span>{portfolioData.personal.githubDisplay}</span>
             </motion.a>
 
@@ -283,9 +347,12 @@ export default function Hero({ onOpenResume }: HeroProps) {
               href={portfolioData.personal.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.08, y: -2 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.44 }}
+              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(239, 68, 68, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-red-500/40 hover:bg-red-500/10 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-red-500/50 hover:bg-red-500/10 transition-all cursor-pointer"
             >
               <YoutubeIcon className="w-3.5 h-3.5 text-red-500" />
               <span>YouTube</span>
@@ -295,9 +362,12 @@ export default function Hero({ onOpenResume }: HeroProps) {
               href={portfolioData.personal.kick}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.08, y: -2 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.48 }}
+              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(16, 185, 129, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all cursor-pointer"
             >
               <KickIcon className="w-3.5 h-3.5 text-emerald-400" />
               <span>Kick</span>
@@ -307,9 +377,12 @@ export default function Hero({ onOpenResume }: HeroProps) {
               href={portfolioData.personal.discord}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.08, y: -2 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.52 }}
+              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(99, 102, 241, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-indigo-400/40 hover:bg-indigo-500/10 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-indigo-400/50 hover:bg-indigo-500/10 transition-all cursor-pointer"
             >
               <DiscordIcon className="w-3.5 h-3.5 text-indigo-400" />
               <span>Discord</span>
@@ -319,9 +392,12 @@ export default function Hero({ onOpenResume }: HeroProps) {
               href={portfolioData.personal.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.08, y: -2 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.56 }}
+              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(236, 72, 153, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-pink-500/40 hover:bg-pink-500/10 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-pink-500/50 hover:bg-pink-500/10 transition-all cursor-pointer"
             >
               <InstagramIcon className="w-3.5 h-3.5 text-pink-400" />
               <span>Instagram</span>
@@ -331,9 +407,12 @@ export default function Hero({ onOpenResume }: HeroProps) {
               href={portfolioData.personal.steam}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.08, y: -2 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(56, 189, 248, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-sky-400/40 hover:bg-sky-500/10 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-sky-400/50 hover:bg-sky-500/10 transition-all cursor-pointer"
             >
               <SteamIcon className="w-3.5 h-3.5 text-sky-400" />
               <span>Steam</span>
@@ -341,22 +420,31 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
             <motion.a
               href={`mailto:${portfolioData.personal.email}`}
-              whileHover={{ scale: 1.08, y: -2 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.64 }}
+              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(129, 140, 248, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-indigo-400/40 hover:bg-indigo-500/10 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-indigo-400/50 hover:bg-indigo-500/10 transition-all cursor-pointer"
             >
               <Mail className="w-3.5 h-3.5 text-indigo-400" />
               <span>{portfolioData.personal.email}</span>
             </motion.a>
 
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill text-zinc-400">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.68 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 16px rgba(168, 85, 247, 0.3)" }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill text-zinc-400 border border-white/5 hover:border-purple-400/40 transition-all"
+            >
               <MapPin className="w-3.5 h-3.5 text-indigo-400" />
               <span>{portfolioData.personal.location}</span>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Right Column: 3D Mouse-Tilt Interactive Photo Frame */}
+        {/* Right Column: 3D Mouse-Tilt Interactive Photo Frame (Cleaned of Corner Badges) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -423,50 +511,6 @@ export default function Hero({ onOpenResume }: HeroProps) {
                 </div>
               </div>
             </div>
-
-            {/* Floating Tech Badge #1: Top Left */}
-            <motion.div
-              animate={{ y: [0, -7, 0] }}
-              transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-              whileHover={{ scale: 1.1, y: -4 }}
-              className="absolute -top-3 -left-3 px-3 py-1.5 rounded-xl glass-panel border border-cyan-400/40 shadow-xl shadow-cyan-950/50 text-[11px] font-semibold text-white flex items-center gap-1.5 backdrop-blur-md z-30 hover:border-cyan-400 transition-colors"
-            >
-              <Code2 className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Full-Stack Web</span>
-            </motion.div>
-
-            {/* Floating Tech Badge #2: Top Right */}
-            <motion.div
-              animate={{ y: [0, 7, 0] }}
-              transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-              whileHover={{ scale: 1.1, y: 4 }}
-              className="absolute -top-3 -right-3 px-3 py-1.5 rounded-xl glass-panel border border-indigo-400/40 shadow-xl shadow-indigo-950/50 text-[11px] font-semibold text-white flex items-center gap-1.5 backdrop-blur-md z-30 hover:border-indigo-400 transition-colors"
-            >
-              <Layers className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Next.js 16 • React 19</span>
-            </motion.div>
-
-            {/* Floating Tech Badge #3: Bottom Left */}
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-              whileHover={{ scale: 1.1, y: 4 }}
-              className="absolute -bottom-2 -left-3 px-3 py-1.5 rounded-xl glass-panel border border-emerald-400/40 shadow-xl shadow-emerald-950/50 text-[11px] font-semibold text-white flex items-center gap-1.5 backdrop-blur-md z-30 hover:border-emerald-400 transition-colors"
-            >
-              <Radio className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Real-Time Systems</span>
-            </motion.div>
-
-            {/* Floating Tech Badge #4: Bottom Right */}
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
-              whileHover={{ scale: 1.1, y: -4 }}
-              className="absolute -bottom-2 -right-3 px-3 py-1.5 rounded-xl glass-panel border border-amber-400/40 shadow-xl shadow-amber-950/50 text-[11px] font-semibold text-white flex items-center gap-1.5 backdrop-blur-md z-30 hover:border-amber-400 transition-colors"
-            >
-              <Database className="w-3.5 h-3.5 text-amber-400" />
-              <span>Supabase & Node</span>
-            </motion.div>
           </motion.div>
         </motion.div>
       </div>
