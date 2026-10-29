@@ -270,9 +270,9 @@ export default function Skills() {
       <div className="mt-16 glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 relative overflow-hidden space-y-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left border-b border-white/10 pb-4">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-bold text-indigo-400 uppercase tracking-widest">
-              <Cpu className="w-4 h-4" />
-              <span>All Skills from CV • Continuous Live Stream</span>
+            <div className="inline-flex items-center gap-2 text-sm font-bold text-white tracking-wide">
+              <Cpu className="w-4 h-4 text-indigo-400" />
+              <span>Skills</span>
             </div>
           </div>
           <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-300 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
