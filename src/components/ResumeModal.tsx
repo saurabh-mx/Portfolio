@@ -27,14 +27,14 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto print:static print:p-0 print:overflow-visible">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/80 backdrop-blur-md"
+          className="fixed inset-0 bg-black/80 backdrop-blur-md print-hidden-control"
         />
 
         {/* Modal Window */}
@@ -43,10 +43,10 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto z-10 glass-panel rounded-2xl border border-white/10 shadow-2xl p-6 sm:p-10 text-zinc-100"
+          className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto z-10 glass-panel rounded-2xl border border-white/10 shadow-2xl p-6 sm:p-10 text-zinc-100 print:max-h-none print:overflow-visible print:p-0 print:border-none print:shadow-none print:bg-white print:text-slate-900"
         >
-          {/* Header Controls */}
-          <div className="flex items-center justify-between pb-5 mb-6 border-b border-white/10">
+          {/* Header Controls (Hidden during PDF print) */}
+          <div className="flex items-center justify-between pb-5 mb-6 border-b border-white/10 print-hidden-control">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full border border-indigo-400/40 flex items-center justify-center text-xs font-bold text-indigo-300">
                 {portfolioData.personal.initials}
@@ -56,8 +56,8 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrint}
-                className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors cursor-pointer"
-                title="Print or Save as PDF"
+                className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors cursor-pointer shadow-lg shadow-indigo-600/30"
+                title="Save as 1-Page PDF"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Save PDF</span>
@@ -72,11 +72,11 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             </div>
           </div>
 
-          {/* Resume Body */}
-          <div className="space-y-7">
-            {/* Header info */}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
-              <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-indigo-400/40 bg-slate-900 flex-shrink-0 shadow-lg">
+          {/* Printable Resume Body - Strictly Styled to Conclude on 1 Single Page */}
+          <div id="resume-printable-area" className="resume-single-page space-y-6 print:space-y-2.5 print:text-slate-900 print:bg-white">
+            {/* Header / Contact Bar */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left print:flex-row print:gap-3.5 print:text-left">
+              <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-indigo-400/40 bg-slate-900 flex-shrink-0 shadow-lg print:w-13 print:h-13 print:rounded-xl print:border-slate-300">
                 <Image
                   src={portfolioData.personal.avatar}
                   alt={portfolioData.personal.name}
@@ -84,152 +84,122 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   className="object-cover object-top"
                 />
               </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-wider uppercase">
+              <div className="flex-1">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-wider uppercase print:text-lg print:font-black print:text-slate-950 print:tracking-tight">
                   {portfolioData.personal.name}
                 </h1>
-                <p className="text-xs sm:text-sm font-semibold text-indigo-400 mt-1">
+                <p className="text-xs sm:text-sm font-semibold text-indigo-400 mt-0.5 print:text-[11px] print:text-indigo-700 print:font-bold">
                   {portfolioData.personal.title}
                 </p>
-              
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-2 gap-x-5 text-xs text-zinc-300 mt-3 font-normal">
-                <a href={`mailto:${portfolioData.personal.email}`} className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors">
-                  <Mail className="w-3.5 h-3.5 text-indigo-400" />
-                  {portfolioData.personal.email}
-                </a>
-                <span className="text-zinc-600 hidden sm:inline">•</span>
-                <span className="flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-indigo-400" />
-                  {portfolioData.personal.location}
-                </span>
-                <span className="text-zinc-600 hidden sm:inline">•</span>
-                <a
-                  href={portfolioData.personal.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors"
-                >
-                  <GithubIcon className="w-3.5 h-3.5 text-indigo-400" />
-                  <span>{portfolioData.personal.githubDisplay}</span>
-                </a>
-                <span className="text-zinc-600 hidden sm:inline">•</span>
-                <a
-                  href={portfolioData.personal.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 hover:text-red-400 transition-colors"
-                >
-                  <YoutubeIcon className="w-3.5 h-3.5 text-red-500" />
-                  <span>YouTube</span>
-                </a>
-                <span className="text-zinc-600 hidden sm:inline">•</span>
-                <a
-                  href={portfolioData.personal.kick}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 hover:text-emerald-400 transition-colors"
-                >
-                  <KickIcon className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Kick</span>
-                </a>
-                <span className="text-zinc-600 hidden sm:inline">•</span>
-                <a
-                  href={portfolioData.personal.discord}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors"
-                >
-                  <DiscordIcon className="w-3.5 h-3.5 text-indigo-400" />
-                  <span>Discord</span>
-                </a>
-                <span className="text-zinc-600 hidden sm:inline">•</span>
-                <a
-                  href={portfolioData.personal.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 hover:text-pink-400 transition-colors"
-                >
-                  <InstagramIcon className="w-3.5 h-3.5 text-pink-400" />
-                  <span>Instagram</span>
-                </a>
-                <span className="text-zinc-600 hidden sm:inline">•</span>
-                <a
-                  href={portfolioData.personal.steam}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 hover:text-sky-400 transition-colors"
-                >
-                  <SteamIcon className="w-3.5 h-3.5 text-sky-400" />
-                  <span>Steam</span>
-                </a>
+
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-1.5 gap-x-4 text-xs text-zinc-300 mt-2 font-normal print:gap-x-2.5 print:gap-y-0.5 print:text-[9.5px] print:text-slate-600 print:mt-1">
+                  <a href={`mailto:${portfolioData.personal.email}`} className="flex items-center gap-1 hover:text-indigo-400 transition-colors">
+                    <Mail className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-600 print:w-3 print:h-3" />
+                    <span>{portfolioData.personal.email}</span>
+                  </a>
+                  <span className="text-zinc-600 print:text-slate-400">•</span>
+                  <span className="flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-600 print:w-3 print:h-3" />
+                    <span>{portfolioData.personal.location}</span>
+                  </span>
+                  <span className="text-zinc-600 print:text-slate-400">•</span>
+                  <a
+                    href={portfolioData.personal.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 hover:text-indigo-400 transition-colors"
+                  >
+                    <GithubIcon className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-600 print:w-3 print:h-3" />
+                    <span>{portfolioData.personal.githubDisplay}</span>
+                  </a>
+                  <span className="text-zinc-600 print:text-slate-400">•</span>
+                  <span className="flex items-center gap-1">
+                    <YoutubeIcon className="w-3.5 h-3.5 text-red-500 print:w-3 print:h-3" />
+                    <span>YouTube</span>
+                  </span>
+                  <span className="text-zinc-600 print:text-slate-400">•</span>
+                  <span className="flex items-center gap-1">
+                    <KickIcon className="w-3.5 h-3.5 text-emerald-400 print:w-3 print:h-3" />
+                    <span>Kick</span>
+                  </span>
+                  <span className="text-zinc-600 print:text-slate-400">•</span>
+                  <span className="flex items-center gap-1">
+                    <DiscordIcon className="w-3.5 h-3.5 text-indigo-400 print:w-3 print:h-3" />
+                    <span>Discord</span>
+                  </span>
+                  <span className="text-zinc-600 print:text-slate-400">•</span>
+                  <span className="flex items-center gap-1">
+                    <InstagramIcon className="w-3.5 h-3.5 text-pink-400 print:w-3 print:h-3" />
+                    <span>Instagram</span>
+                  </span>
+                  <span className="text-zinc-600 print:text-slate-400">•</span>
+                  <span className="flex items-center gap-1">
+                    <SteamIcon className="w-3.5 h-3.5 text-sky-400 print:w-3 print:h-3" />
+                    <span>Steam</span>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
             {/* Summary */}
-            <div className="border-t border-white/10 pt-5">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2">Summary</h3>
-              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+            <div className="border-t border-white/10 pt-4 print:pt-2 print:border-slate-200">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-1.5 print:text-[10px] print:font-extrabold print:text-indigo-800 print:mb-0.5">
+                Summary
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed print:text-[9.5px] print:leading-snug print:text-slate-700">
                 {portfolioData.personal.bio}
               </p>
             </div>
 
-            {/* Skills */}
-            <div className="border-t border-white/10 pt-5">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-3">Skills</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                  <span className="font-semibold text-white">Frontend:</span>{" "}
-                  <span className="text-zinc-300">React, Next.js, Vite, Tailwind CSS, HTML5, CSS3</span>
+            {/* Skills (2x2 Grid) */}
+            <div className="border-t border-white/10 pt-4 print:pt-2 print:border-slate-200">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2.5 print:text-[10px] print:font-extrabold print:text-indigo-800 print:mb-1">
+                Technical Skills
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs print:grid-cols-2 print:gap-1.5 print:text-[9.5px]">
+                <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 print:p-1.5 print:bg-slate-50 print:border-slate-200 print:rounded-lg">
+                  <span className="font-semibold text-white print:text-slate-900">Frontend:</span>{" "}
+                  <span className="text-zinc-300 print:text-slate-600">React, Next.js, Vite, Tailwind CSS, HTML5, CSS3</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                  <span className="font-semibold text-white">Programming:</span>{" "}
-                  <span className="text-zinc-300">TypeScript, JavaScript, Python, SQL</span>
+                <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 print:p-1.5 print:bg-slate-50 print:border-slate-200 print:rounded-lg">
+                  <span className="font-semibold text-white print:text-slate-900">Programming:</span>{" "}
+                  <span className="text-zinc-300 print:text-slate-600">TypeScript, JavaScript, Python, SQL</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                  <span className="font-semibold text-white">Backend & APIs:</span>{" "}
-                  <span className="text-zinc-300">Node.js, Express, PostgreSQL, Prisma ORM, Supabase, Socket.IO, JWT</span>
+                <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 print:p-1.5 print:bg-slate-50 print:border-slate-200 print:rounded-lg">
+                  <span className="font-semibold text-white print:text-slate-900">Backend & APIs:</span>{" "}
+                  <span className="text-zinc-300 print:text-slate-600">Node.js, Express, PostgreSQL, Prisma ORM, Supabase, Socket.IO, JWT</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
-                  <span className="font-semibold text-white">Development Tools:</span>{" "}
-                  <span className="text-zinc-300">Git, GitHub, Vercel, REST API Development</span>
+                <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 print:p-1.5 print:bg-slate-50 print:border-slate-200 print:rounded-lg">
+                  <span className="font-semibold text-white print:text-slate-900">Development Tools:</span>{" "}
+                  <span className="text-zinc-300 print:text-slate-600">Git, GitHub, Vercel, REST API Development</span>
                 </div>
               </div>
             </div>
 
-            {/* Education */}
-            <div className="border-t border-white/10 pt-5">
-              <div className="flex items-center gap-2 mb-3">
-                <GraduationCap className="w-4 h-4 text-indigo-400" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400">Education</h3>
+            {/* Featured Projects */}
+            <div className="border-t border-white/10 pt-4 print:pt-2 print:border-slate-200">
+              <div className="flex items-center gap-1.5 mb-2.5 print:mb-1">
+                <Briefcase className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-700" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 print:text-[10px] print:font-extrabold print:text-indigo-800">
+                  Featured Projects
+                </h3>
               </div>
-              <div className="pl-4 border-l border-white/10 space-y-1 text-xs">
-                <p className="text-sm font-semibold text-white">{portfolioData.personal.education.institution}</p>
-                <p className="text-zinc-300">{portfolioData.personal.education.degree}</p>
-                <p className="text-indigo-400 font-mono text-[11px]">{portfolioData.personal.education.expectedDate}</p>
-              </div>
-            </div>
-
-            {/* Projects */}
-            <div className="border-t border-white/10 pt-5">
-              <div className="flex items-center gap-2 mb-4">
-                <Briefcase className="w-4 h-4 text-indigo-400" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400">Projects</h3>
-              </div>
-              <div className="space-y-5">
+              <div className="space-y-3.5 print:space-y-1.5">
                 {portfolioData.projects.map((proj) => (
-                  <div key={proj.id} className="relative pl-4 border-l border-white/10">
-                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-1 gap-1">
+                  <div key={proj.id} className="relative pl-3.5 border-l border-white/10 print:border-l-2 print:border-indigo-400/40 print:pl-2">
+                    <div className="flex items-baseline justify-between mb-0.5">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="text-sm font-bold text-white">{proj.title}</h4>
-                        <span className="text-zinc-600">|</span>
+                        <h4 className="text-xs sm:text-sm font-bold text-white print:text-[10.5px] print:text-slate-900">
+                          {proj.title}
+                        </h4>
+                        <span className="text-zinc-600 print:text-slate-400 text-[10px]">|</span>
                         <a
                           href={proj.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-indigo-400 hover:underline flex items-center gap-1"
+                          className="text-xs text-indigo-400 hover:underline flex items-center gap-1 print:text-[9px] print:text-indigo-700 font-mono"
                         >
-                          <GithubIcon className="w-3 h-3" />
+                          <GithubIcon className="w-3 h-3 print:hidden" />
                           <span>{proj.githubUrl.replace("https://", "")}</span>
                         </a>
                       </div>
@@ -237,24 +207,24 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                         href={proj.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[11px] text-cyan-400 hover:underline flex items-center gap-1"
+                        className="text-[11px] text-cyan-400 hover:underline flex items-center gap-1 print:text-[9px] print:text-slate-500 font-mono"
                       >
-                        <ExternalLink className="w-3 h-3" />
+                        <ExternalLink className="w-3 h-3 print:hidden" />
                         <span>Live Demo</span>
                       </a>
                     </div>
 
-                    <div className="flex flex-wrap gap-1 mb-2">
-                      {proj.tags.map((t, idx) => (
-                        <span key={idx} className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-zinc-400 border border-white/5">
+                    <div className="flex flex-wrap gap-1 mb-1 print:mb-0.5">
+                      {proj.tags.slice(0, 6).map((t, idx) => (
+                        <span key={idx} className="text-[9.5px] px-1.5 py-0.5 rounded bg-white/5 text-zinc-400 border border-white/5 print:text-[8.5px] print:py-0 print:px-1 print:bg-slate-100 print:text-slate-700 print:border-slate-200">
                           {t}
                         </span>
                       ))}
                     </div>
 
-                    <ul className="list-disc list-inside space-y-1 text-xs text-zinc-300">
-                      {proj.highlights.map((h, hIdx) => (
-                        <li key={hIdx} className="leading-relaxed">{h}</li>
+                    <ul className="list-disc list-inside space-y-0.5 text-xs text-zinc-300 print:text-[9px] print:leading-tight print:text-slate-700">
+                      {proj.highlights.slice(0, 2).map((h, hIdx) => (
+                        <li key={hIdx} className="leading-relaxed print:leading-tight">{h}</li>
                       ))}
                     </ul>
                   </div>
@@ -262,36 +232,51 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               </div>
             </div>
 
-            {/* Certification */}
-            <div className="border-t border-white/10 pt-5">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <Award className="w-4 h-4 text-amber-400" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400">Certification</h3>
+            {/* Bottom Row: Education & Certification (Placed Side-by-Side in Print to Fit Strictly on 1 Page) */}
+            <div className="border-t border-white/10 pt-4 print:pt-2 print:border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-4 print:grid-cols-2 print:gap-3">
+              {/* Education */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-1.5 print:mb-1">
+                  <GraduationCap className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-700" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 print:text-[10px] print:font-extrabold print:text-indigo-800">
+                    Education
+                  </h3>
                 </div>
-                <a
-                  href={portfolioData.personal.certification.certificateUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[11px] text-cyan-400 hover:underline"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  <span>View Original Certificate</span>
-                </a>
+                <div className="pl-3 border-l border-white/10 print:border-l-2 print:border-indigo-400/40 text-xs print:text-[9.5px] space-y-0.5">
+                  <p className="font-semibold text-white print:text-slate-900">{portfolioData.personal.education.institution}</p>
+                  <p className="text-zinc-300 print:text-slate-700">{portfolioData.personal.education.degree}</p>
+                  <p className="text-indigo-400 print:text-indigo-700 font-mono text-[10px] print:text-[9px]">{portfolioData.personal.education.expectedDate}</p>
+                </div>
               </div>
-              <div className="pl-4 border-l border-white/10 text-xs space-y-1.5">
-                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                  <p className="font-semibold text-white">{portfolioData.personal.certification.title}</p>
-                  <span className="text-indigo-400 font-mono text-[11px]">
-                    {portfolioData.personal.certification.period}
-                  </span>
+
+              {/* Certification */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5 print:mb-1">
+                  <div className="flex items-center gap-1.5">
+                    <Award className="w-3.5 h-3.5 text-amber-400 print:text-amber-600" />
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 print:text-[10px] print:font-extrabold print:text-indigo-800">
+                      Vocational Training
+                    </h3>
+                  </div>
+                  <a
+                    href={portfolioData.personal.certification.certificateUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[10px] text-cyan-400 hover:underline print:hidden"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    <span>View Certificate</span>
+                  </a>
                 </div>
-                <p className="text-zinc-300">
-                  {portfolioData.personal.certification.issuer} • Duration: {portfolioData.personal.certification.duration}
-                </p>
-                <p className="text-zinc-400 font-mono text-[11px]">
-                  SID: <span className="text-zinc-200">{portfolioData.personal.certification.sid}</span> • Completed on {portfolioData.personal.certification.issueDate}
-                </p>
+                <div className="pl-3 border-l border-white/10 print:border-l-2 print:border-amber-400/40 text-xs print:text-[9.5px] space-y-0.5">
+                  <p className="font-semibold text-white print:text-slate-900">{portfolioData.personal.certification.title}</p>
+                  <p className="text-zinc-300 print:text-slate-700">
+                    {portfolioData.personal.certification.issuer} • Duration: {portfolioData.personal.certification.duration}
+                  </p>
+                  <p className="text-zinc-400 print:text-slate-600 font-mono text-[10px] print:text-[9px]">
+                    SID: <span className="text-zinc-200 print:text-slate-900 font-bold">{portfolioData.personal.certification.sid}</span> • Issued: {portfolioData.personal.certification.issueDate}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
