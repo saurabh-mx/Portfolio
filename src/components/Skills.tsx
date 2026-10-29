@@ -390,7 +390,7 @@ export default function Skills() {
         {/* Quick Grid View of All CV Skills */}
         <div className="pt-4 border-t border-white/5">
           <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-3 text-center sm:text-left">
-            Interactive CV Cloud (Click any icon to pin)
+            Interactive CV Cloud (Click any skill to inspect)
           </p>
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
             {allSkillsList.map((skill) => {
@@ -400,18 +400,16 @@ export default function Skills() {
               return (
                 <button
                   key={`cloud-${skill.id}`}
-                  onClick={() => setActiveSkill(skill)}
-                  onMouseEnter={() => {
-                    setHoveredSkill(skill);
+                  onClick={() => {
                     setActiveSkill(skill);
+                    setHoveredSkill(null);
                   }}
-                  onMouseLeave={() => setHoveredSkill(null)}
                   style={{
                     borderColor: isSelected ? skill.brandColor : "rgba(255, 255, 255, 0.08)",
                     backgroundColor: isSelected ? `${skill.brandColor}18` : "rgba(255, 255, 255, 0.02)",
                     boxShadow: isSelected ? `0 0 15px ${skill.glowColor}` : undefined,
                   }}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs text-zinc-300 hover:text-white transition-all cursor-pointer group"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs text-zinc-300 hover:text-white transition-all cursor-pointer group hover:border-white/20 select-none"
                 >
                   <Icon className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" size={15} />
                   <span className="font-medium text-[11px]">{skill.name}</span>
