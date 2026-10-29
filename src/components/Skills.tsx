@@ -274,9 +274,6 @@ export default function Skills() {
               <Cpu className="w-4 h-4" />
               <span>All Skills from CV • Continuous Live Stream</span>
             </div>
-            <p className="text-xs text-zinc-400 mt-1">
-              Hover over any technology chip to pause animation and instantly inspect its capabilities.
-            </p>
           </div>
           <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-400 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
             <span
