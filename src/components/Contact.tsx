@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Send, CheckCircle2, MessageSquare, Phone, ArrowUpRight, AlertCircle } from "lucide-react";
-import { GithubIcon, YoutubeIcon, KickIcon } from "@/components/SocialIcons";
+import { Mail, MapPin, Send, CheckCircle2, MessageSquare, Phone, ArrowUpRight, ExternalLink } from "lucide-react";
+import { GithubIcon, YoutubeIcon, KickIcon, WhatsAppIcon } from "@/components/SocialIcons";
 import { portfolioData } from "@/data/portfolio-data";
 
 export default function Contact() {
@@ -14,37 +14,48 @@ export default function Contact() {
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [lastMailtoUrl, setLastMailtoUrl] = useState<string>("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const buildMailtoUrl = () => {
+    const sub = encodeURIComponent(
+      formData.subject.trim() || `Portfolio Inquiry from ${formData.name.trim() || "Visitor"}`
+    );
+    const body = encodeURIComponent(
+      `Hello Saurabh,\n\nName: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}\n\n---\nSent via Saurabh Patel's Portfolio Website`
+    );
+    return `mailto:${portfolioData.personal.email}?subject=${sub}&body=${body}`;
+  };
+
+  const buildWhatsAppUrl = () => {
+    const text = encodeURIComponent(
+      `Hi Saurabh,\nMy name is ${formData.name || "a visitor"}.\n\nMessage:\n${formData.message || "I saw your portfolio and would like to connect."}\n\nEmail: ${formData.email || "N/A"}`
+    );
+    // WhatsApp phone number without spaces or plus
+    return `https://wa.me/915539067785?text=${text}`;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
     setStatus("submitting");
-    setErrorMessage("");
+    const mailto = buildMailtoUrl();
+    setLastMailtoUrl(mailto);
 
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    setTimeout(() => {
+      // Trigger default email app
+      window.location.href = mailto;
+      setStatus("success");
+    }, 600);
+  };
 
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setStatus("success");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        setStatus("idle");
-        setErrorMessage(
-          data.error || "Failed to send message. Please verify your Resend API key."
-        );
-      }
-    } catch (err: any) {
-      setStatus("idle");
-      setErrorMessage("Network error occurred. Please check your connection and try again.");
+  const handleWhatsAppSubmit = () => {
+    if (!formData.name && !formData.message) {
+      window.open("https://wa.me/915539067785", "_blank");
+      return;
     }
+    const waUrl = buildWhatsAppUrl();
+    window.open(waUrl, "_blank");
   };
 
   return (
@@ -69,7 +80,7 @@ export default function Contact() {
           <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 space-y-6">
             <h3 className="text-xl font-bold text-white">Contact Information</h3>
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-              Available via email, phone, or GitHub.
+              Available via direct email, WhatsApp, phone, or GitHub.
             </p>
 
             <div className="space-y-4">
@@ -81,7 +92,7 @@ export default function Contact() {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div className="overflow-hidden">
-                  <p className="text-xs text-zinc-400">Email</p>
+                  <p className="text-xs text-zinc-400">Direct Email</p>
                   <p className="text-sm font-medium text-white truncate group-hover:text-indigo-300">
                     {portfolioData.personal.email}
                   </p>
@@ -103,6 +114,23 @@ export default function Contact() {
                 </div>
               </a>
 
+              <a
+                href="https://wa.me/915539067785"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 p-3.5 rounded-2xl glass-panel-subtle hover:bg-white/10 border border-white/5 transition-colors group cursor-pointer"
+              >
+                <div className="p-2.5 rounded-xl bg-green-500/10 text-green-400 group-hover:scale-110 transition-transform">
+                  <WhatsAppIcon className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs text-zinc-400">WhatsApp</p>
+                  <p className="text-sm font-medium text-white group-hover:text-green-300">
+                    +91 5539067785 (Chat Directly)
+                  </p>
+                </div>
+              </a>
+
               <div className="flex items-center gap-4 p-3.5 rounded-2xl glass-panel-subtle border border-white/5">
                 <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-400">
                   <MapPin className="w-5 h-5" />
@@ -114,7 +142,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Profiles */}
+            {/* Social Profiles */}
             <div className="pt-4 border-t border-white/10">
               <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3">
                 Social Profiles
@@ -157,28 +185,50 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Contact Form */}
+        {/* Contact Form with Direct Mailto & WhatsApp Fallbacks */}
         <div className="lg:col-span-7">
           <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10">
             {status === "success" ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="py-12 flex flex-col items-center text-center space-y-4"
+                className="py-10 flex flex-col items-center text-center space-y-4"
               >
                 <div className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h4 className="text-xl font-bold text-white">Message Received!</h4>
-                <p className="text-sm text-zinc-400 max-w-md">
-                  Thank you, Saurabh will get back to you shortly.
+                <h4 className="text-xl font-bold text-white">Email Client Launched!</h4>
+                <p className="text-sm text-zinc-300 max-w-md leading-relaxed">
+                  Your email client was opened with your message pre-filled to <strong className="text-indigo-400 font-mono">{portfolioData.personal.email}</strong>.
                 </p>
-                <button
-                  onClick={() => setStatus("idle")}
-                  className="mt-4 px-5 py-2.5 rounded-xl glass-pill text-xs font-medium text-zinc-300 hover:text-white cursor-pointer"
-                >
-                  Send Another Message
-                </button>
+
+                {/* Direct Action Links */}
+                <div className="flex flex-wrap items-center justify-center gap-3 pt-3">
+                  {lastMailtoUrl && (
+                    <a
+                      href={lastMailtoUrl}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium transition-colors"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>Re-open Email App</span>
+                    </a>
+                  )}
+
+                  <button
+                    onClick={handleWhatsAppSubmit}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-600/20 hover:bg-green-600 border border-green-500/40 text-green-300 hover:text-white text-xs font-medium transition-colors cursor-pointer"
+                  >
+                    <WhatsAppIcon className="w-3.5 h-3.5 text-green-400" />
+                    <span>Send via WhatsApp</span>
+                  </button>
+
+                  <button
+                    onClick={() => setStatus("idle")}
+                    className="px-4 py-2.5 rounded-xl glass-pill text-xs font-medium text-zinc-300 hover:text-white cursor-pointer"
+                  >
+                    Write Another
+                  </button>
+                </div>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -221,7 +271,7 @@ export default function Contact() {
                   <input
                     id="subject"
                     type="text"
-                    placeholder="Project Inquiry / Opportunity"
+                    placeholder="Project Inquiry / Job Opportunity"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
@@ -243,30 +293,38 @@ export default function Contact() {
                   />
                 </div>
 
-                {errorMessage && (
-                  <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-400 flex items-start gap-2">
-                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">{errorMessage}</span>
-                  </div>
-                )}
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <button
+                    type="submit"
+                    disabled={status === "submitting"}
+                    className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-purple-600 text-white font-medium text-sm shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:opacity-95 disabled:opacity-50 transition-all cursor-pointer"
+                  >
+                    {status === "submitting" ? (
+                      <span className="flex items-center gap-2">
+                        <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                        Opening Mail...
+                      </span>
+                    ) : (
+                      <>
+                        <span>Send via Email App</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
 
-                <button
-                  type="submit"
-                  disabled={status === "submitting"}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-purple-600 text-white font-medium text-sm shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:opacity-95 disabled:opacity-50 transition-all cursor-pointer"
-                >
-                  {status === "submitting" ? (
-                    <span className="flex items-center gap-2">
-                      <span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                      Sending...
-                    </span>
-                  ) : (
-                    <>
-                      <span>Send Message</span>
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
+                  <button
+                    type="button"
+                    onClick={handleWhatsAppSubmit}
+                    className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-green-400 font-medium text-sm transition-all cursor-pointer"
+                  >
+                    <WhatsAppIcon className="w-4 h-4" />
+                    <span>WhatsApp</span>
+                  </button>
+                </div>
+
+                <p className="text-[11px] text-zinc-500 mt-2">
+                  💡 Clicking &quot;Send via Email App&quot; automatically opens your email program (Gmail, Outlook, etc.) with everything filled in directly to <span className="text-zinc-400 font-mono">{portfolioData.personal.email}</span>.
+                </p>
               </form>
             )}
           </div>
