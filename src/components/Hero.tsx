@@ -3,7 +3,14 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight, Mail, Sparkles, Download, Phone, MapPin, Code2 } from "lucide-react";
-import { GithubIcon, YoutubeIcon, KickIcon } from "@/components/SocialIcons";
+import {
+  GithubIcon,
+  YoutubeIcon,
+  KickIcon,
+  DiscordIcon,
+  InstagramIcon,
+  SteamIcon,
+} from "@/components/SocialIcons";
 import { portfolioData } from "@/data/portfolio-data";
 
 interface HeroProps {
@@ -123,6 +130,33 @@ export default function Hero({ onOpenResume }: HeroProps) {
             >
               <KickIcon className="w-3.5 h-3.5 text-emerald-400" />
               <span>Kick</span>
+            </a>
+            <a
+              href={portfolioData.personal.discord}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-indigo-400/40 hover:bg-indigo-500/10 transition-all hover:scale-105"
+            >
+              <DiscordIcon className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Discord</span>
+            </a>
+            <a
+              href={portfolioData.personal.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-pink-500/40 hover:bg-pink-500/10 transition-all hover:scale-105"
+            >
+              <InstagramIcon className="w-3.5 h-3.5 text-pink-400" />
+              <span>Instagram</span>
+            </a>
+            <a
+              href={portfolioData.personal.steam}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-sky-400/40 hover:bg-sky-500/10 transition-all hover:scale-105"
+            >
+              <SteamIcon className="w-3.5 h-3.5 text-sky-400" />
+              <span>Steam</span>
             </a>
             <a
               href={`mailto:${portfolioData.personal.email}`}

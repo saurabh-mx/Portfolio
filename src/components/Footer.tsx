@@ -1,7 +1,14 @@
 "use client";
 
 import { ArrowUp, Mail } from "lucide-react";
-import { GithubIcon, YoutubeIcon, KickIcon } from "@/components/SocialIcons";
+import {
+  GithubIcon,
+  YoutubeIcon,
+  KickIcon,
+  DiscordIcon,
+  InstagramIcon,
+  SteamIcon,
+} from "@/components/SocialIcons";
 import { portfolioData } from "@/data/portfolio-data";
 
 export default function Footer() {
@@ -54,6 +61,36 @@ export default function Footer() {
               title="Kick Stream"
             >
               <KickIcon className="w-4 h-4" />
+            </a>
+            <a
+              href={portfolioData.personal.discord}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-xl glass-pill text-zinc-400 hover:text-indigo-400 transition-colors"
+              aria-label="Discord"
+              title="Discord Server"
+            >
+              <DiscordIcon className="w-4 h-4" />
+            </a>
+            <a
+              href={portfolioData.personal.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-xl glass-pill text-zinc-400 hover:text-pink-400 transition-colors"
+              aria-label="Instagram"
+              title="Instagram Profile"
+            >
+              <InstagramIcon className="w-4 h-4" />
+            </a>
+            <a
+              href={portfolioData.personal.steam}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-xl glass-pill text-zinc-400 hover:text-sky-400 transition-colors"
+              aria-label="Steam"
+              title="Steam Profile"
+            >
+              <SteamIcon className="w-4 h-4" />
             </a>
             <a
               href={`mailto:${portfolioData.personal.email}`}

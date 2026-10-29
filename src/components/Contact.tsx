@@ -3,7 +3,15 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send, CheckCircle2, MessageSquare, Phone, ArrowUpRight, ExternalLink } from "lucide-react";
-import { GithubIcon, YoutubeIcon, KickIcon, WhatsAppIcon } from "@/components/SocialIcons";
+import {
+  GithubIcon,
+  YoutubeIcon,
+  KickIcon,
+  WhatsAppIcon,
+  DiscordIcon,
+  InstagramIcon,
+  SteamIcon,
+} from "@/components/SocialIcons";
 import { portfolioData } from "@/data/portfolio-data";
 
 export default function Contact() {
@@ -179,6 +187,39 @@ export default function Contact() {
                 >
                   <KickIcon className="w-4 h-4 text-emerald-400" />
                   <span>Kick</span>
+                  <ArrowUpRight className="w-3 h-3 text-zinc-500" />
+                </a>
+
+                <a
+                  href={portfolioData.personal.discord}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl glass-pill text-xs text-zinc-300 hover:text-white hover:border-indigo-400/40 hover:bg-indigo-500/10 transition-colors"
+                >
+                  <DiscordIcon className="w-4 h-4 text-indigo-400" />
+                  <span>Discord</span>
+                  <ArrowUpRight className="w-3 h-3 text-zinc-500" />
+                </a>
+
+                <a
+                  href={portfolioData.personal.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl glass-pill text-xs text-zinc-300 hover:text-white hover:border-pink-500/40 hover:bg-pink-500/10 transition-colors"
+                >
+                  <InstagramIcon className="w-4 h-4 text-pink-400" />
+                  <span>Instagram</span>
+                  <ArrowUpRight className="w-3 h-3 text-zinc-500" />
+                </a>
+
+                <a
+                  href={portfolioData.personal.steam}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl glass-pill text-xs text-zinc-300 hover:text-white hover:border-sky-400/40 hover:bg-sky-500/10 transition-colors"
+                >
+                  <SteamIcon className="w-4 h-4 text-sky-400" />
+                  <span>Steam</span>
                   <ArrowUpRight className="w-3 h-3 text-zinc-500" />
                 </a>
               </div>

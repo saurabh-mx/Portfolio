@@ -3,7 +3,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { X, Download, ExternalLink, Briefcase, GraduationCap, Award, Mail, Phone, MapPin } from "lucide-react";
-import { GithubIcon, YoutubeIcon, KickIcon } from "@/components/SocialIcons";
+import {
+  GithubIcon,
+  YoutubeIcon,
+  KickIcon,
+  DiscordIcon,
+  InstagramIcon,
+  SteamIcon,
+} from "@/components/SocialIcons";
 import { portfolioData } from "@/data/portfolio-data";
 
 interface ResumeModalProps {
@@ -126,6 +133,36 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 >
                   <KickIcon className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Kick</span>
+                </a>
+                <span className="text-zinc-600 hidden sm:inline">•</span>
+                <a
+                  href={portfolioData.personal.discord}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors"
+                >
+                  <DiscordIcon className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>Discord</span>
+                </a>
+                <span className="text-zinc-600 hidden sm:inline">•</span>
+                <a
+                  href={portfolioData.personal.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 hover:text-pink-400 transition-colors"
+                >
+                  <InstagramIcon className="w-3.5 h-3.5 text-pink-400" />
+                  <span>Instagram</span>
+                </a>
+                <span className="text-zinc-600 hidden sm:inline">•</span>
+                <a
+                  href={portfolioData.personal.steam}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 hover:text-sky-400 transition-colors"
+                >
+                  <SteamIcon className="w-3.5 h-3.5 text-sky-400" />
+                  <span>Steam</span>
                 </a>
               </div>
             </div>

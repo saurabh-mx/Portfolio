@@ -45,6 +45,9 @@ export const portfolioData = {
     githubDisplay: "github.com/saurabh-mx",
     youtube: "https://www.youtube.com/@VenomPlaZzYT",
     kick: "https://kick.com/venomplazzyt",
+    discord: "https://discord.gg/yehtgK7fY",
+    instagram: "https://www.instagram.com/saurabh_patel_762/",
+    steam: "https://steamcommunity.com/profiles/76561199538173443/",
     education: {
       institution: "Rungta College of Engineering and Technology",
       degree: "B.Tech in Computer Science & Engineering",
