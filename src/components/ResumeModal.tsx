@@ -3,15 +3,8 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { X, Download, ExternalLink, Briefcase, GraduationCap, Award, Mail, MapPin } from "lucide-react";
-import {
-  GithubIcon,
-  YoutubeIcon,
-  KickIcon,
-  DiscordIcon,
-  InstagramIcon,
-  SteamIcon,
-} from "@/components/SocialIcons";
+import { X, Download, ExternalLink, Briefcase, GraduationCap, Award, Mail, MapPin, Globe } from "lucide-react";
+import { GithubIcon } from "@/components/SocialIcons";
 import { portfolioData } from "@/data/portfolio-data";
 
 interface ResumeModalProps {
@@ -110,13 +103,16 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   {portfolioData.personal.title}
                 </p>
 
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-1.5 gap-x-4 text-xs text-zinc-300 mt-2 font-normal print:gap-x-3 print:gap-y-1 print:text-[10px] print:text-slate-600 print:mt-1.5">
-                  <a href={`mailto:${portfolioData.personal.email}`} className="flex items-center gap-1 hover:text-indigo-400 transition-colors">
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-y-1.5 gap-x-4 text-xs text-zinc-300 mt-2 font-normal print:gap-x-4 print:gap-y-1 print:text-[10px] print:text-slate-600 print:mt-1.5">
+                  <a
+                    href={`mailto:${portfolioData.personal.email}`}
+                    className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors"
+                  >
                     <Mail className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-600 print:w-3.5 print:h-3.5" />
                     <span>{portfolioData.personal.email}</span>
                   </a>
                   <span className="text-zinc-600 print:text-slate-400">•</span>
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-600 print:w-3.5 print:h-3.5" />
                     <span>{portfolioData.personal.location}</span>
                   </span>
@@ -125,36 +121,21 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     href={portfolioData.personal.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 hover:text-indigo-400 transition-colors"
+                    className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors"
                   >
                     <GithubIcon className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-600 print:w-3.5 print:h-3.5" />
                     <span>{portfolioData.personal.githubDisplay}</span>
                   </a>
                   <span className="text-zinc-600 print:text-slate-400">•</span>
-                  <span className="flex items-center gap-1">
-                    <YoutubeIcon className="w-3.5 h-3.5 text-red-500 print:w-3.5 print:h-3.5" />
-                    <span>YouTube</span>
-                  </span>
-                  <span className="text-zinc-600 print:text-slate-400">•</span>
-                  <span className="flex items-center gap-1">
-                    <KickIcon className="w-3.5 h-3.5 text-emerald-400 print:w-3.5 print:h-3.5" />
-                    <span>Kick</span>
-                  </span>
-                  <span className="text-zinc-600 print:text-slate-400">•</span>
-                  <span className="flex items-center gap-1">
-                    <DiscordIcon className="w-3.5 h-3.5 text-indigo-400 print:w-3.5 print:h-3.5" />
-                    <span>Discord</span>
-                  </span>
-                  <span className="text-zinc-600 print:text-slate-400">•</span>
-                  <span className="flex items-center gap-1">
-                    <InstagramIcon className="w-3.5 h-3.5 text-pink-400 print:w-3.5 print:h-3.5" />
-                    <span>Instagram</span>
-                  </span>
-                  <span className="text-zinc-600 print:text-slate-400">•</span>
-                  <span className="flex items-center gap-1">
-                    <SteamIcon className="w-3.5 h-3.5 text-sky-400 print:w-3.5 print:h-3.5" />
-                    <span>Steam</span>
-                  </span>
+                  <a
+                    href={portfolioData.personal.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors"
+                  >
+                    <Globe className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-600 print:w-3.5 print:h-3.5" />
+                    <span>Portfolio</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -162,7 +143,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             {/* Summary */}
             <div className="border-t border-white/10 pt-4 print:pt-3 print:border-slate-200">
               <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-1.5 print:text-[11px] print:font-extrabold print:text-indigo-800 print:mb-1 print:tracking-wider">
-                Summary
+                Professional Summary
               </h3>
               <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed print:text-[10px] print:leading-relaxed print:text-slate-700">
                 {portfolioData.personal.bio}
@@ -273,7 +254,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   <div className="flex items-center gap-1.5">
                     <Award className="w-3.5 h-3.5 text-amber-400 print:text-amber-600 print:w-3.5 print:h-3.5" />
                     <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-400 print:text-[11px] print:font-extrabold print:text-indigo-800 print:tracking-wider">
-                      Vocational Training
+                      Vocational Certification
                     </h3>
                   </div>
                   <a
