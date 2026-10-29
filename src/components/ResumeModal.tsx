@@ -278,6 +278,25 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 </div>
               </div>
             </div>
+
+            {/* Bottom Portfolio Link Bar */}
+            <div className="border-t border-white/10 pt-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-zinc-400 print:pt-2 print:border-slate-200 print:text-[9.5px]">
+              <div className="flex items-center gap-1.5 font-medium text-zinc-300 print:text-slate-700">
+                <Globe className="w-3.5 h-3.5 text-indigo-400 print:text-indigo-600 print:w-3 print:h-3 flex-shrink-0" />
+                <span>Portfolio & Code Repositories:</span>
+                <a
+                  href={portfolioData.personal.portfolioUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-400 hover:underline font-mono font-bold print:text-indigo-700"
+                >
+                  {portfolioData.personal.portfolioDisplay}
+                </a>
+              </div>
+              <span className="text-[10px] print:text-[8px] font-mono text-zinc-500 print:text-slate-400">
+                Full-Stack Developer • Saurabh Bhai Patel
+              </span>
+            </div>
           </div>
         </motion.div>
       </div>

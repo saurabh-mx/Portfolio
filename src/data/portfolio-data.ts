@@ -43,6 +43,8 @@ export const portfolioData = {
     email: "saurabhpatel6935@gmail.com",
     github: "https://github.com/saurabh-mx",
     githubDisplay: "github.com/saurabh-mx",
+    portfolioUrl: "https://github.com/saurabh-mx",
+    portfolioDisplay: "github.com/saurabh-mx",
     youtube: "https://www.youtube.com/@VenomPlaZzYT",
     kick: "https://kick.com/venomplazzyt",
     discord: "https://discord.gg/yehtgK7fY",
