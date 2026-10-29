@@ -526,14 +526,24 @@ export default function Hero({ onOpenResume }: HeroProps) {
 
             {/* Inner Photo */}
             <div className="relative w-full h-full rounded-[22px] overflow-hidden bg-slate-900">
-              <Image
-                src={portfolioData.personal.avatar}
-                alt={portfolioData.personal.name}
-                fill
-                priority
-                className="object-cover object-top hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 768px) 288px, 320px"
-              />
+              <motion.div
+                className="relative w-full h-full"
+                animate={{
+                  scale: isCardHovered ? 1.38 : 1.3,
+                  y: "-7%",
+                  x: "1.5%",
+                }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Image
+                  src={portfolioData.personal.avatar}
+                  alt={portfolioData.personal.name}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 768px) 288px, 320px"
+                />
+              </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent pointer-events-none" />
 
               {/* Bottom Card Caption */}
