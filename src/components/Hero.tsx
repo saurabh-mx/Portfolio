@@ -549,117 +549,52 @@ export default function Hero({ onOpenResume }: HeroProps) {
         </motion.div>
       </div>
 
-      {/* Animated Stats Bar with Laser Accents & Continuous Floating Wave */}
+      {/* Animated Stats Bar with Continuous Wave Motion & Crisp Readability */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.45 }}
         className="mt-16 w-full grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
       >
-        {[
-          {
-            value: "Next.js & React",
-            label: "Core Stack",
-            sub: "App Router & SSR Architecture",
-            icon: Layers,
-            accent: "#38BDF8",
-            glow: "rgba(56, 189, 248, 0.35)",
-            tag: "SYS.CORE",
-          },
-          {
-            value: "Node • Supabase",
-            label: "Backend & Cloud",
-            sub: "Row-Level Security & REST APIs",
-            icon: Database,
-            accent: "#10B981",
-            glow: "rgba(168, 85, 129, 0.35)",
-            tag: "CLOUD.RLS",
-          },
-          {
-            value: "4+ Shipped",
-            label: "Production Apps",
-            sub: "Full-Stack Web Deployments",
-            icon: Rocket,
-            accent: "#A855F7",
-            glow: "rgba(168, 85, 247, 0.35)",
-            tag: "DEPLOYED",
-          },
-          {
-            value: "100% Responsive",
-            label: "UI / UX Standard",
-            sub: "Mobile-First & Fluid Layouts",
-            icon: Sparkles,
-            accent: "#06B6D4",
-            glow: "rgba(6, 182, 212, 0.35)",
-            tag: "LIGHTHOUSE",
-          },
-        ].map((stat, i) => {
-          const StatIcon = stat.icon;
-          return (
+        {portfolioData.stats.map((stat, i) => (
+          <motion.div
+            key={stat.label}
+            animate={{ y: [0, -4, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.22,
+            }}
+            whileHover={{
+              y: -7,
+              scale: 1.03,
+              boxShadow: "0 14px 30px -10px rgba(99, 102, 241, 0.35)",
+              borderColor: "rgba(129, 140, 248, 0.4)",
+            }}
+            className="glass-panel rounded-2xl p-5 text-center border border-white/10 hover:border-indigo-500/50 hover:bg-slate-900/80 transition-all group relative overflow-hidden cursor-pointer select-none"
+          >
+            {/* Top Laser Accent Sweep */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Subtle Shimmer Light Reflection Sweep */}
             <motion.div
-              key={stat.label}
-              animate={{ y: [0, -3.5, 0] }}
-              transition={{
-                duration: 3.5 + i * 0.4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 0.25,
-              }}
-              whileHover={{
-                y: -8,
-                scale: 1.03,
-                boxShadow: `0 0 25px ${stat.glow}`,
-                borderColor: stat.accent,
-              }}
-              className="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 transition-all group relative overflow-hidden cursor-pointer select-none bg-slate-900/60"
-            >
-              {/* Top Laser Accent Line */}
-              <div
-                className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-300"
-                style={{ backgroundColor: stat.accent }}
-              />
+              animate={{ x: ["-100%", "250%"] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "linear", delay: i * 0.9 }}
+              className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent skew-x-12 pointer-events-none"
+            />
 
-              {/* Shimmer Light Reflection Sweep */}
-              <motion.div
-                animate={{ x: ["-100%", "250%"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: i * 0.9 }}
-                className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/[0.05] to-transparent skew-x-12 pointer-events-none"
-              />
+            {/* Value */}
+            <div className="text-xl sm:text-2xl font-black text-white group-hover:text-indigo-300 transition-colors tracking-tight">
+              {stat.value}
+            </div>
 
-              {/* Header inside Card */}
-              <div className="flex items-center justify-between mb-2.5">
-                <div
-                  className="p-1.5 rounded-lg bg-white/5 border border-white/10 group-hover:scale-110 transition-transform shadow-inner"
-                  style={{ color: stat.accent }}
-                >
-                  <StatIcon className="w-4 h-4" />
-                </div>
-                <div className="flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-wider text-zinc-400 font-semibold bg-white/5 px-2 py-0.5 rounded-full border border-white/5">
-                  <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: stat.accent }} />
-                  <span>{stat.tag}</span>
-                </div>
-              </div>
-
-              {/* Value */}
-              <div
-                className="text-lg sm:text-xl lg:text-2xl font-black text-white group-hover:text-transparent group-hover:bg-clip-text transition-all tracking-tight"
-                style={{
-                  backgroundImage: `linear-gradient(to right, #FFFFFF, ${stat.accent})`,
-                }}
-              >
-                {stat.value}
-              </div>
-
-              {/* Label & Subtitle */}
-              <div className="text-xs font-semibold text-zinc-300 mt-1 group-hover:text-white transition-colors">
-                {stat.label}
-              </div>
-              <p className="text-[10px] text-zinc-500 font-mono mt-0.5 group-hover:text-zinc-400 transition-colors">
-                {stat.sub}
-              </p>
-            </motion.div>
-          );
-        })}
+            {/* Label */}
+            <div className="text-xs text-zinc-400 mt-1.5 font-medium group-hover:text-zinc-200 transition-colors">
+              {stat.label}
+            </div>
+          </motion.div>
+        ))}
       </motion.div>
     </section>
   );
