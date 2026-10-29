@@ -38,6 +38,7 @@ import {
   NodeIcon,
   SupabaseIcon,
 } from "@/components/TechIcons";
+import { BorderBeam } from "@/components/BorderBeam";
 import { portfolioData } from "@/data/portfolio-data";
 
 interface HeroProps {
@@ -516,6 +517,18 @@ export default function Hero({ onOpenResume }: HeroProps) {
             transition={{ duration: 0.2 }}
             className="relative w-64 h-80 sm:w-72 sm:h-96 md:w-80 md:h-[420px] rounded-[28px] overflow-hidden glass-panel border border-white/20 p-2 shadow-2xl shadow-indigo-950/60 cursor-pointer select-none"
           >
+            {/* Glowing Laser Stick Border Beam Animation on Mouse Hover */}
+            {isCardHovered && (
+              <BorderBeam
+                size={180}
+                duration={3}
+                colorFrom="#38BDF8"
+                colorTo="#FFFFFF"
+                borderWidth={2}
+                borderRadius={28}
+              />
+            )}
+
             {/* Dynamic Glass Glare Overlay on Hover */}
             <div
               className={`absolute inset-0 pointer-events-none rounded-[28px] z-20 mix-blend-overlay transition-opacity duration-300 ${
