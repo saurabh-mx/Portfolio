@@ -57,11 +57,16 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
         >
           {/* Header Controls (Hidden during PDF print) */}
           <div className="flex items-center justify-between pb-5 mb-6 border-b border-white/10 cv-print-exclude print:hidden">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full border border-indigo-400/40 flex items-center justify-center text-xs font-bold text-indigo-300">
-                {portfolioData.personal.initials}
+            <div className="flex items-center gap-2.5">
+              <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-indigo-400/40 flex-shrink-0 shadow-md shadow-indigo-500/20">
+                <Image
+                  src="/favicon.svg"
+                  alt="SP Logo"
+                  fill
+                  className="object-cover"
+                />
               </div>
-              <h2 className="text-lg font-bold tracking-tight text-white">Curriculum Vitae</h2>
+              <h2 className="text-lg font-bold tracking-tight text-white">CV</h2>
             </div>
             <div className="flex items-center gap-2">
               <button
