@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Send, CheckCircle2, MessageSquare, Phone, ArrowUpRight } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle2, MessageSquare, Phone, ArrowUpRight, AlertCircle } from "lucide-react";
 import { GithubIcon, YoutubeIcon, KickIcon } from "@/components/SocialIcons";
 import { portfolioData } from "@/data/portfolio-data";
 
@@ -14,16 +14,37 @@ export default function Contact() {
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
     setStatus("submitting");
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 1000);
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("idle");
+        setErrorMessage(
+          data.error || "Failed to send message. Please verify your Resend API key."
+        );
+      }
+    } catch (err: any) {
+      setStatus("idle");
+      setErrorMessage("Network error occurred. Please check your connection and try again.");
+    }
   };
 
   return (
@@ -221,6 +242,13 @@ export default function Contact() {
                     className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none"
                   />
                 </div>
+
+                {errorMessage && (
+                  <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-400 flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{errorMessage}</span>
+                  </div>
+                )}
 
                 <button
                   type="submit"
