@@ -81,11 +81,26 @@ const curatedProjectsMeta: Record<
     tags: ["Next.js 16", "React 19", "TypeScript", "Supabase", "Recharts", "React-Player", "Tailwind CSS"],
     image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1000&q=80",
     liveUrl: "https://race-bidding.vercel.app",
-    featured: false,
+    featured: true,
     highlights: [
       "Real-Time Betting Engine: powered by Supabase for responsive bid synchronization.",
       "Live Race Video Integration: smooth race playback and live streams using React-Player.",
       "Betting Trends & Odds Charts: visual analytics and odds tracking built with Recharts.",
+    ],
+  },
+  "portfolio": {
+    title: "Engineering Portfolio",
+    description:
+      "Interactive full-stack portfolio built with Next.js 16 App Router & React 19 RSC, featuring 3D hardware-accelerated tilt cards, kinetic glowing border animations, dynamic GitHub live sync, and automated 1-page ATS-compliant CV export.",
+    category: "Full Stack",
+    tags: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Turbopack", "Lucide"],
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1000&q=80",
+    liveUrl: "https://portfolio-tau-flax-72.vercel.app",
+    featured: true,
+    highlights: [
+      "Sub-Second Turbopack Rendering: Architected with Next.js 16 App Router and React Server Components.",
+      "Hardware-Accelerated 3D Motion: Physics-based 3D spring tilt, laser border beams, and 60fps micro-interactions.",
+      "Deterministic 1-Page ATS CV: Print layout isolation engine generating strictly 1-page executive PDFs.",
     ],
   },
 };
@@ -154,6 +169,24 @@ export async function fetchGitHubProjects(): Promise<Project[]> {
           ],
         };
       });
+
+    // Sort with curated priority order
+    const priorityOrder = [
+      "upi-stream-overlay",
+      "hr-management-portal",
+      "race-bidding",
+      "laxmann-phool-bhandar",
+      "portfolio",
+    ];
+
+    projects.sort((a, b) => {
+      const aIdx = priorityOrder.indexOf(a.id.toLowerCase());
+      const bIdx = priorityOrder.indexOf(b.id.toLowerCase());
+      if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
+      if (aIdx !== -1) return -1;
+      if (bIdx !== -1) return 1;
+      return 0;
+    });
 
     return projects.length > 0 ? projects : portfolioData.projects;
   } catch (error) {

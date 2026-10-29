@@ -225,5 +225,22 @@ export const portfolioData = {
         "Interactive Betting Analytics: Visual odds tracking and betting statistics using Recharts.",
       ],
     },
+    {
+      id: "portfolio",
+      title: "Engineering Portfolio",
+      description:
+        "Interactive full-stack portfolio built with Next.js 16 App Router & React 19 RSC, featuring 3D hardware-accelerated tilt cards, kinetic glowing border animations, dynamic GitHub live sync, and automated 1-page ATS-compliant CV export.",
+      category: "Full Stack",
+      tags: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Turbopack"],
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1000&q=80",
+      liveUrl: "https://portfolio-tau-flax-72.vercel.app",
+      githubUrl: "https://github.com/saurabh-mx/Portfolio",
+      featured: true,
+      highlights: [
+        "Sub-Second Turbopack Rendering: Architected with Next.js 16 App Router and React Server Components.",
+        "Hardware-Accelerated 3D Motion: Physics-based 3D spring tilt, laser border beams, and 60fps micro-interactions.",
+        "Deterministic 1-Page ATS CV: Print layout isolation engine generating strictly 1-page executive PDFs.",
+      ],
+    },
   ] as Project[],
 };
