@@ -277,7 +277,7 @@ export default function Skills() {
           </div>
           <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-300 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-semibold text-white">{allSkillsList.length} Skills Added</span>
+            <span className="font-semibold text-white">{allSkillsList.length} Skills</span>
           </div>
         </div>
 
