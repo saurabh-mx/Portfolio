@@ -382,9 +382,6 @@ export default function Skills() {
 
         {/* Quick Grid View of All CV Skills */}
         <div className="pt-4 border-t border-white/5">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-3 text-center sm:text-left">
-            Interactive CV Cloud (Click any skill to inspect)
-          </p>
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
             {allSkillsList.map((skill) => {
               const Icon = skill.icon;
