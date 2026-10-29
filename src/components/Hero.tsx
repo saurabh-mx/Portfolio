@@ -92,6 +92,96 @@ const coreTechnologies = [
   },
 ];
 
+const socialBadges = [
+  {
+    id: "github",
+    href: portfolioData.personal.github,
+    icon: GithubIcon,
+    label: portfolioData.personal.githubDisplay,
+    hoverBorder: "hover:border-white/50",
+    hoverBg: "hover:bg-white/10",
+    iconColor: "text-white",
+    glowColor: "rgba(255, 255, 255, 0.35)",
+    isLink: true,
+  },
+  {
+    id: "youtube",
+    href: portfolioData.personal.youtube,
+    icon: YoutubeIcon,
+    label: "YouTube",
+    hoverBorder: "hover:border-red-500/50",
+    hoverBg: "hover:bg-red-500/10",
+    iconColor: "text-red-500",
+    glowColor: "rgba(239, 68, 68, 0.4)",
+    isLink: true,
+  },
+  {
+    id: "kick",
+    href: portfolioData.personal.kick,
+    icon: KickIcon,
+    label: "Kick",
+    hoverBorder: "hover:border-emerald-500/50",
+    hoverBg: "hover:bg-emerald-500/10",
+    iconColor: "text-emerald-400",
+    glowColor: "rgba(16, 185, 129, 0.4)",
+    isLink: true,
+  },
+  {
+    id: "discord",
+    href: portfolioData.personal.discord,
+    icon: DiscordIcon,
+    label: "Discord",
+    hoverBorder: "hover:border-indigo-400/50",
+    hoverBg: "hover:bg-indigo-500/10",
+    iconColor: "text-indigo-400",
+    glowColor: "rgba(99, 102, 241, 0.4)",
+    isLink: true,
+  },
+  {
+    id: "instagram",
+    href: portfolioData.personal.instagram,
+    icon: InstagramIcon,
+    label: "Instagram",
+    hoverBorder: "hover:border-pink-500/50",
+    hoverBg: "hover:bg-pink-500/10",
+    iconColor: "text-pink-400",
+    glowColor: "rgba(236, 72, 153, 0.4)",
+    isLink: true,
+  },
+  {
+    id: "steam",
+    href: portfolioData.personal.steam,
+    icon: SteamIcon,
+    label: "Steam",
+    hoverBorder: "hover:border-sky-400/50",
+    hoverBg: "hover:bg-sky-500/10",
+    iconColor: "text-sky-400",
+    glowColor: "rgba(56, 189, 248, 0.4)",
+    isLink: true,
+  },
+  {
+    id: "email",
+    href: `mailto:${portfolioData.personal.email}`,
+    icon: Mail,
+    label: portfolioData.personal.email,
+    hoverBorder: "hover:border-indigo-400/50",
+    hoverBg: "hover:bg-indigo-500/10",
+    iconColor: "text-indigo-400",
+    glowColor: "rgba(129, 140, 248, 0.4)",
+    isLink: true,
+  },
+  {
+    id: "location",
+    icon: MapPin,
+    label: portfolioData.personal.location,
+    hoverBorder: "hover:border-purple-400/40",
+    hoverBg: "hover:bg-purple-500/10",
+    iconColor: "text-indigo-400",
+    glowColor: "rgba(168, 85, 247, 0.35)",
+    isLink: false,
+  },
+];
+
 export default function Hero({ onOpenResume }: HeroProps) {
   const [roleIndex, setRoleIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
@@ -327,121 +417,64 @@ export default function Hero({ onOpenResume }: HeroProps) {
             </motion.a>
           </motion.div>
 
-          {/* Direct Social & Contact Chips with Individual Stagger & Platform-Specific Glow */}
-          <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs text-zinc-300">
-            <motion.a
-              href={portfolioData.personal.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(255, 255, 255, 0.3)" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-white/50 transition-all cursor-pointer"
-            >
-              <GithubIcon className="w-3.5 h-3.5 text-white" />
-              <span>{portfolioData.personal.githubDisplay}</span>
-            </motion.a>
+          {/* Continuous Wave Motion Social & Contact Chips */}
+          <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs text-zinc-300 py-1.5">
+            {socialBadges.map((badge, i) => {
+              const BadgeIcon = badge.icon;
+              const content = (
+                <>
+                  <BadgeIcon className={`w-3.5 h-3.5 ${badge.iconColor}`} />
+                  <span>{badge.label}</span>
+                </>
+              );
 
-            <motion.a
-              href={portfolioData.personal.youtube}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.44 }}
-              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(239, 68, 68, 0.4)" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-red-500/50 hover:bg-red-500/10 transition-all cursor-pointer"
-            >
-              <YoutubeIcon className="w-3.5 h-3.5 text-red-500" />
-              <span>YouTube</span>
-            </motion.a>
+              const motionProps = {
+                key: badge.id,
+                initial: { opacity: 0, y: 10 },
+                animate: {
+                  opacity: 1,
+                  y: [0, -5, 0],
+                },
+                transition: {
+                  opacity: { duration: 0.4, delay: 0.35 + i * 0.05 },
+                  y: {
+                    duration: 2.8,
+                    repeat: Infinity,
+                    ease: "easeInOut" as const,
+                    delay: i * 0.22,
+                  },
+                },
+                whileHover: {
+                  scale: 1.1,
+                  y: -7,
+                  boxShadow: `0 0 18px ${badge.glowColor}`,
+                },
+                whileTap: { scale: 0.95 },
+                className: `flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill transition-colors cursor-pointer select-none hover:text-white ${badge.hoverBorder} ${badge.hoverBg}`,
+              };
 
-            <motion.a
-              href={portfolioData.personal.kick}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.48 }}
-              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(16, 185, 129, 0.4)" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all cursor-pointer"
-            >
-              <KickIcon className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Kick</span>
-            </motion.a>
+              if (badge.isLink) {
+                return (
+                  <motion.a
+                    {...motionProps}
+                    href={badge.href}
+                    target={badge.href?.startsWith("mailto:") ? undefined : "_blank"}
+                    rel={badge.href?.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  >
+                    {content}
+                  </motion.a>
+                );
+              }
 
-            <motion.a
-              href={portfolioData.personal.discord}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.52 }}
-              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(99, 102, 241, 0.4)" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-indigo-400/50 hover:bg-indigo-500/10 transition-all cursor-pointer"
-            >
-              <DiscordIcon className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Discord</span>
-            </motion.a>
-
-            <motion.a
-              href={portfolioData.personal.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.56 }}
-              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(236, 72, 153, 0.4)" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-pink-500/50 hover:bg-pink-500/10 transition-all cursor-pointer"
-            >
-              <InstagramIcon className="w-3.5 h-3.5 text-pink-400" />
-              <span>Instagram</span>
-            </motion.a>
-
-            <motion.a
-              href={portfolioData.personal.steam}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(56, 189, 248, 0.4)" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-sky-400/50 hover:bg-sky-500/10 transition-all cursor-pointer"
-            >
-              <SteamIcon className="w-3.5 h-3.5 text-sky-400" />
-              <span>Steam</span>
-            </motion.a>
-
-            <motion.a
-              href={`mailto:${portfolioData.personal.email}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.64 }}
-              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 16px rgba(129, 140, 248, 0.4)" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill hover:text-white hover:border-indigo-400/50 hover:bg-indigo-500/10 transition-all cursor-pointer"
-            >
-              <Mail className="w-3.5 h-3.5 text-indigo-400" />
-              <span>{portfolioData.personal.email}</span>
-            </motion.a>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.68 }}
-              whileHover={{ scale: 1.05, boxShadow: "0 0 16px rgba(168, 85, 247, 0.3)" }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill text-zinc-400 border border-white/5 hover:border-purple-400/40 transition-all"
-            >
-              <MapPin className="w-3.5 h-3.5 text-indigo-400" />
-              <span>{portfolioData.personal.location}</span>
-            </motion.div>
+              return (
+                <motion.div
+                  {...motionProps}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-pill text-zinc-400 border border-white/5 transition-colors cursor-default select-none ${badge.hoverBorder} ${badge.hoverBg}`}
+                >
+                  {content}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
