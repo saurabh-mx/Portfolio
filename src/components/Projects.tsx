@@ -63,9 +63,6 @@ export default function Projects() {
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
           Featured Repositories & Products
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-zinc-400 max-w-2xl">
-          Auto-synchronized with <a href={portfolioData.personal.github} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">github.com/saurabh-mx</a>. Any new public repo pushed to GitHub is automatically added.
-        </p>
       </div>
 
       {/* Filter Tabs */}
